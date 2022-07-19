@@ -1,7 +1,7 @@
 #include <iostream>
+#include <gtest/gtest.h>
 #include "Adder/adder.h"
 
-int main(int argc, char* argv[]) {
-  std::cout << "Hello World" << std::endl;
-  std::cout << "Adder = " << adder(3,4) << std::endl;
+TEST(sampleTest, sampleTestcase) {
+  EXPECT_EQ(adder(3,4), 7);
 }
