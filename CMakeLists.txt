@@ -10,10 +10,15 @@ add_executable(${PROJECT_NAME} helloWorld.cpp)
 # # PUBLIC ./Add also works
 target_include_directories(${PROJECT_NAME}
                               PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/Adder")
-
 add_library(libAdder SHARED ${CMAKE_CURRENT_SOURCE_DIR}/Adder/Adder.cpp)
-
 target_link_libraries(${PROJECT_NAME} libAdder)
+
+target_include_directories(${PROJECT_NAME}
+                              PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/Sort")
+set (libSort_SOURCE
+    ${CMAKE_CURRENT_SOURCE_DIR}/Sort/bubbleSort.cpp)
+add_library(libSort SHARED ${libSort_SOURCE})
+target_link_libraries(${PROJECT_NAME} libSort)
 
 ###################
 # TEST
