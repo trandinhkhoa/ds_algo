@@ -1,3 +1,23 @@
+- C/C++ Intellisense
+  - create `.vscode/c_cpp_properties.json` by:
+    - open "Command Palette"
+    - Choose "C/C++: Edit Configurations"
+  - configure **clang** for Mac:
+    - https://code.visualstudio.com/docs/cpp/config-clang-mac
+    -
+      ```
+        "compilerPath": "/usr/bin/clang",
+        "cStandard": "c11",
+        "cppStandard": "c++17",
+        "intelliSenseMode": "clang-x64"
+      ```
+    - there is also `includePath`. Here is just an example in the case where I download the headers of my dependencies into `${workspaceFolder}/build/_deps/**`:
+      ```
+        "includePath": [
+              "${workspaceFolder}/**",
+              "${workspaceFolder}/build/_deps/**"
+          ],
+      ```
 - cmake
   - setup
   ```
