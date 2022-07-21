@@ -2,6 +2,7 @@
 #include <gtest/gtest.h>
 #include "adder.h"
 #include "bubbleSort.h"
+#include "mergeSort.h"
 
 namespace helper {
 void printArray(std::vector<int>& array) {
@@ -42,8 +43,26 @@ TEST(sampleTest, sampleTestcase) {
 }
 
 TEST(BubbleSortTest, BubbleSortTest_basic) {
-  std::vector<int> array(helper::generateArray(10));
+  std::vector<int> array(helper::generateArray(100));
   bubbleSort(array);
-  helper::printArray(array);
+  EXPECT_TRUE(helper::isArraySortedAscending(array));
+}
+
+TEST(BubbleSortTest, BubbleSortTest_oddSizedArray) {
+  std::vector<int> array(helper::generateArray(101));
+  bubbleSort(array);
+  EXPECT_TRUE(helper::isArraySortedAscending(array));
+}
+
+TEST(MergeSortTest, MergeSortTest_basic) {
+  // TODO: profile/add benchmarks for mergeSort, bubbleSort, etc.
+  std::vector<int> array(helper::generateArray(100));
+  mergeSort(array);
+  EXPECT_TRUE(helper::isArraySortedAscending(array));
+}
+
+TEST(MergeSortTest, MergeSortTest_oddSizedArray) {
+  std::vector<int> array(helper::generateArray(101));
+  bubbleSort(array);
   EXPECT_TRUE(helper::isArraySortedAscending(array));
 }

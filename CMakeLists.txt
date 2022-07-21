@@ -16,7 +16,8 @@ target_link_libraries(${PROJECT_NAME} libAdder)
 target_include_directories(${PROJECT_NAME}
                               PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/Sort")
 set (libSort_SOURCE
-    ${CMAKE_CURRENT_SOURCE_DIR}/Sort/bubbleSort.cpp)
+    ${CMAKE_CURRENT_SOURCE_DIR}/Sort/bubbleSort.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Sort/mergeSort.cpp)
 add_library(libSort SHARED ${libSort_SOURCE})
 target_link_libraries(${PROJECT_NAME} libSort)
 
