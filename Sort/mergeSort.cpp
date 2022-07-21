@@ -1,4 +1,4 @@
-#include "bubbleSort.h"
+#include "sort.h"
 #include <iostream>
 
 void merge(std::vector<int>& array, int begin, int middle, int end) {

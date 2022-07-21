@@ -1,4 +1,4 @@
-#include "bubbleSort.h"
+#include "sort.h"
 #include <iostream>
 
 void swap(int& a, int &b) {

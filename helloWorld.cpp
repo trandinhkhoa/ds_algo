@@ -1,8 +1,7 @@
 #include <iostream>
 #include <gtest/gtest.h>
 #include "adder.h"
-#include "bubbleSort.h"
-#include "mergeSort.h"
+#include "sort.h"
 
 namespace helper {
 void printArray(std::vector<int>& array) {
