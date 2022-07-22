@@ -1,10 +1,13 @@
 #include "sort.h"
 #include <iostream>
 
+// TODO: centralize common helpers functions
+namespace {
 void swap(int& a, int &b) {
   int temp = a;
   a = b;
   b = temp;
+}
 }
 
 void bubbleSort(std::vector<int>& array) {

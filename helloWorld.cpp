@@ -65,3 +65,12 @@ TEST(MergeSortTest, MergeSortTest_oddSizedArray) {
   bubbleSort(array);
   EXPECT_TRUE(helper::isArraySortedAscending(array));
 }
+
+// TODO: test sorts with array.size = 1
+
+TEST(QuickSortTest, QuickSortTest_basic) {
+  std::vector<int> array(helper::generateArray(10));
+  quickSort(array, 0, array.size() - 1);
+  helper::printArray(array);
+  EXPECT_TRUE(helper::isArraySortedAscending(array));
+}
