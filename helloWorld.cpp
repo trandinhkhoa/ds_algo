@@ -69,8 +69,13 @@ TEST(MergeSortTest, MergeSortTest_oddSizedArray) {
 // TODO: test sorts with array.size = 1
 
 TEST(QuickSortTest, QuickSortTest_basic) {
-  std::vector<int> array(helper::generateArray(10));
+  std::vector<int> array(helper::generateArray(100));
   quickSort(array, 0, array.size() - 1);
-  helper::printArray(array);
+  EXPECT_TRUE(helper::isArraySortedAscending(array));
+}
+
+TEST(QuickSortTest, QuickSortTest_oddSizedArray) {
+  std::vector<int> array(helper::generateArray(101));
+  quickSort(array, 0, array.size() - 1);
   EXPECT_TRUE(helper::isArraySortedAscending(array));
 }
