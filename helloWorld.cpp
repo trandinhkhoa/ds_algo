@@ -2,6 +2,8 @@
 #include <gtest/gtest.h>
 #include "adder.h"
 #include "sort.h"
+#include "cracking/arraysAndStrings/isUnique.h"
+#include "cracking/arraysAndStrings/checkPermutation.h"
 
 namespace helper {
 void printArray(std::vector<int>& array) {
@@ -78,4 +80,33 @@ TEST(QuickSortTest, QuickSortTest_oddSizedArray) {
   std::vector<int> array(helper::generateArray(101));
   quickSort(array, 0, array.size() - 1);
   EXPECT_TRUE(helper::isArraySortedAscending(array));
+}
+
+// Cracking the Coding Interview
+// Chapter 1 Array and Strings
+
+TEST(IsUniqueTest, IsUniqueTest_basic) {
+  std::string aInputString = "qwertyuiopasdfghjklzxcvbnm1234567890-=[]~\\;',./";
+  bool aResult = cracking::arraysAndStrings::hasAllUniqueCharacter(aInputString);
+  EXPECT_TRUE(aResult);
+}
+
+TEST(IsUniqueTest, IsUniqueTest_shouldBeFalse) {
+  std::string aInputString = "qwertyuiopasdfghjklzxcvbnm1234567890-=[[]]~\\;',./";
+  bool aResult = cracking::arraysAndStrings::hasAllUniqueCharacter(aInputString);
+  EXPECT_FALSE(aResult);
+}
+
+TEST(CheckPermutationTest, CheckPermutationTest_basic) {
+  std::string aInputStringA = "acebde";
+  std::string aInputStringB = "eabcde";
+  bool aResult = cracking::arraysAndStrings::isPermutation(aInputStringA, aInputStringB);
+  EXPECT_TRUE(aResult);
+}
+
+TEST(CheckPermutationTest, CheckPermutationTest_shouldBeFalse) {
+  std::string aInputStringA = "acebda";
+  std::string aInputStringB = "eabcde";
+  bool aResult = cracking::arraysAndStrings::isPermutation(aInputStringA, aInputStringB);
+  EXPECT_FALSE(aResult);
 }

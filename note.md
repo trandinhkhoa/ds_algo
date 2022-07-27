@@ -56,3 +56,24 @@
   ```
   ./build/HelloWorld --gtest_filter="BubbleSort*.BubbleSort*"
   ```
+
+- ArrayList
+  - be sure to be comfortable with dynamically resizeable array/lists in whatever language you will be working with.
+
+- Amortized Time
+  - relevant when you have to perform the same operation(s) repeatedly. This is often the case when dealing with large data structures, and the operation is adding or removing items.
+  - it applies when the algorithms are designed to guarantee that the worst case scenario is only encountered once in a while, and not in every run.
+  - If you add up the complexities of N repeated operations, and the average complexity (i.e. the sum of the complexities divided by N) is better than the worst case scenario, then you can use amortized analysis.
+
+- **Unicode** vs **ASCII**
+  - ASCII defines 128 characters, which maps to 0-127. Unicode defines (les than) 2^21 characters, which maps to numbers 0-2^21.
+  - Unicode is a superset of ASCII, and the number 0-127 have the same meaning in ASCII as they have in Unicode. e.g. the number 65 means "Latin capital 'A'"
+  - Because Unicode characters are usually larger than one 8-bit byte, there are numerous ways of storing Unicode characters in byte sequences. e.g UTF-32, UTF-8
+    - **UTF-8**, **UTF-16**, **UTF-32**:
+      - code points are encoded with one to four 8-bits, one to two 16-bits, one 32-bits code units, respectively
+      - Why there is no **UTF-24** ?
+        - Computers are generally much better at dealing with data on 4 byte boundaries. The benefits in terms of reduced memory consumption are relatively small compared with the pain of working on 3-byte boundaries
+      - **Code points** : similar to characters: a numerical values that maps to a specific character
+      - Encoding example: wikipedia
+        - **Big-endian** stores the most significant byte of **a word** at the smallest memory address
+        - **littele-endian** stores the least significant byte at the smallest memory address
