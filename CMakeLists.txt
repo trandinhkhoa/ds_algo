@@ -26,7 +26,8 @@ target_link_libraries(${PROJECT_NAME} libSort)
 #                               PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/cracking/arraysAndStrings")
 set (libCrackingArrayAndStrings_SOURCE
     ${CMAKE_CURRENT_SOURCE_DIR}/cracking/arraysAndStrings/isUnique.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/cracking/arraysAndStrings/checkPermutation.cpp)
+    ${CMAKE_CURRENT_SOURCE_DIR}/cracking/arraysAndStrings/checkPermutation.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/cracking/arraysAndStrings/urlify.cpp)
 add_library(libCrackingArrayAndStrings SHARED ${libCrackingArrayAndStrings_SOURCE})
 target_link_libraries(${PROJECT_NAME} libCrackingArrayAndStrings)
 

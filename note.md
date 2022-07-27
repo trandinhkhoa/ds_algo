@@ -52,6 +52,13 @@
       - A library target name
       - A full path to a library file:
       - more: https://cmake.org/cmake/help/latest/command/target_link_libraries.html#command:target_link_libraries
+- Debug CMake project in VSCode:
+  - have your `CMakeLists.txt` ready
+  - install CMake Tools
+  - Open the extension (left side bar)
+  - `Configure All Projects`
+  - Build
+  - Right-click on target and debug
 - googleTest
   ```
   ./build/HelloWorld --gtest_filter="BubbleSort*.BubbleSort*"

@@ -4,6 +4,7 @@
 #include "sort.h"
 #include "cracking/arraysAndStrings/isUnique.h"
 #include "cracking/arraysAndStrings/checkPermutation.h"
+#include "cracking/arraysAndStrings/urlify.h"
 
 namespace helper {
 void printArray(std::vector<int>& array) {
@@ -109,4 +110,16 @@ TEST(CheckPermutationTest, CheckPermutationTest_shouldBeFalse) {
   std::string aInputStringB = "eabcde";
   bool aResult = cracking::arraysAndStrings::isPermutation(aInputStringA, aInputStringB);
   EXPECT_FALSE(aResult);
+}
+
+TEST(URLifyTest, URLifyTest_immutableString) {
+  const std::string aInputStringA = "Mr John Smith                 ";
+  std::string aResult = cracking::arraysAndStrings::urlify(aInputStringA, 13);
+  EXPECT_EQ(aResult, "Mr\%20John\%20Smith");
+}
+
+TEST(URLifyTest, URLifyTest_inPlace) {
+  std::string aInputStringA = "Mr John Smith           ";
+  cracking::arraysAndStrings::urlify(aInputStringA, 13);
+  EXPECT_EQ(aInputStringA, "Mr\%20John\%20Smith");
 }
