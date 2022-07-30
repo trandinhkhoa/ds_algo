@@ -5,6 +5,7 @@
 #include "cracking/arraysAndStrings/isUnique.h"
 #include "cracking/arraysAndStrings/checkPermutation.h"
 #include "cracking/arraysAndStrings/urlify.h"
+#include "cracking/arraysAndStrings/palindromPermutation.h"
 
 namespace helper {
 void printArray(std::vector<int>& array) {
@@ -122,4 +123,17 @@ TEST(URLifyTest, URLifyTest_inPlace) {
   std::string aInputStringA = "Mr John Smith           ";
   cracking::arraysAndStrings::urlify(aInputStringA, 13);
   EXPECT_EQ(aInputStringA, "Mr\%20John\%20Smith");
+}
+
+TEST(PalindromePermutationTest, PalindromPermutationTest_basic) {
+  // tacycat
+  std::string aInputStringA = "Tact Coa";
+  bool aResult = cracking::arraysAndStrings::isPermutationOfPalindrome(aInputStringA);
+  EXPECT_TRUE(aResult);
+}
+
+TEST(PalindromePermutationTest, PalindromPermutationTest_shouldReturnFalse) {
+  std::string aInputStringA = "TactiCYa";
+  bool aResult = cracking::arraysAndStrings::isPermutationOfPalindrome(aInputStringA);
+  EXPECT_FALSE(aResult);
 }

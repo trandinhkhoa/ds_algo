@@ -84,3 +84,7 @@
       - Encoding example: wikipedia
         - **Big-endian** stores the most significant byte of **a word** at the smallest memory address
         - **littele-endian** stores the least significant byte at the smallest memory address
+- Bitwise **OR** vs **XOR**
+  - OR = is there a 1 among the 2 ?
+  - XOR = are these 2 bits different from each other?
+  - AND = are both 1s ?
