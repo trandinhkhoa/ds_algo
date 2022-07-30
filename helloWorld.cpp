@@ -6,6 +6,7 @@
 #include "cracking/arraysAndStrings/checkPermutation.h"
 #include "cracking/arraysAndStrings/urlify.h"
 #include "cracking/arraysAndStrings/palindromPermutation.h"
+#include "cracking/arraysAndStrings/oneAway.h"
 
 namespace helper {
 void printArray(std::vector<int>& array) {
@@ -135,5 +136,33 @@ TEST(PalindromePermutationTest, PalindromPermutationTest_basic) {
 TEST(PalindromePermutationTest, PalindromPermutationTest_shouldReturnFalse) {
   std::string aInputStringA = "TactiCYa";
   bool aResult = cracking::arraysAndStrings::isPermutationOfPalindrome(aInputStringA);
+  EXPECT_FALSE(aResult);
+}
+
+TEST(OneAwayTest, OneAwayTest_removeMiddle) {
+  std::string aInputStringA = "pale";
+  std::string aInputStringB = "ple";
+  bool aResult = cracking::arraysAndStrings::oneAway(aInputStringA, aInputStringB);
+  EXPECT_TRUE(aResult);
+}
+
+TEST(OneAwayTest, OneAwayTest_insertEnd) {
+  std::string aInputStringA = "pale";
+  std::string aInputStringB = "pales";
+  bool aResult = cracking::arraysAndStrings::oneAway(aInputStringA, aInputStringB);
+  EXPECT_TRUE(aResult);
+}
+
+TEST(OneAwayTest, OneAwayTest_modify) {
+  std::string aInputStringA = "pale";
+  std::string aInputStringB = "bale";
+  bool aResult = cracking::arraysAndStrings::oneAway(aInputStringA, aInputStringB);
+  EXPECT_TRUE(aResult);
+}
+
+TEST(OneAwayTest, OneAwayTest_shouldReturnFalse) {
+  std::string aInputStringA = "pale";
+  std::string aInputStringB = "bae";
+  bool aResult = cracking::arraysAndStrings::oneAway(aInputStringA, aInputStringB);
   EXPECT_FALSE(aResult);
 }
