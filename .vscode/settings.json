@@ -1,6 +1,7 @@
 {
   "files.associations": {
     "*.tpp": "cpp",
-    "tuple": "cpp"
+    "tuple": "cpp",
+    "string": "cpp"
   }
 }

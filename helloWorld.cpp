@@ -7,6 +7,7 @@
 #include "cracking/arraysAndStrings/urlify.h"
 #include "cracking/arraysAndStrings/palindromPermutation.h"
 #include "cracking/arraysAndStrings/oneAway.h"
+#include "cracking/arraysAndStrings/stringCompression.h"
 
 namespace helper {
 void printArray(std::vector<int>& array) {
@@ -165,4 +166,22 @@ TEST(OneAwayTest, OneAwayTest_shouldReturnFalse) {
   std::string aInputStringB = "bae";
   bool aResult = cracking::arraysAndStrings::oneAway(aInputStringA, aInputStringB);
   EXPECT_FALSE(aResult);
+}
+
+TEST(StringCompressionTest, StringCompressionTest_basic) {
+  std::string aInputString = "aabcccccccccccaaaeeeeeeeeeeeeee";
+  std::string aResult = cracking::arraysAndStrings::stringCompression(aInputString);
+  EXPECT_EQ(aResult, "a2b1c11a3e14");
+}
+
+TEST(StringCompressionTest, StringCompressionTest_shouldNotCompress_1) {
+  std::string aInputString = "abcde";
+  std::string aResult = cracking::arraysAndStrings::stringCompression(aInputString);
+  EXPECT_EQ(aResult, "abcde");
+}
+
+TEST(StringCompressionTest, StringCompressionTest_shouldNotCompress_2) {
+  std::string aInputString = "aabbccdd";
+  std::string aResult = cracking::arraysAndStrings::stringCompression(aInputString);
+  EXPECT_EQ(aResult, "aabbccdd");
 }
