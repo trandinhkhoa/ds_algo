@@ -30,7 +30,8 @@ set (libCrackingArrayAndStrings_SOURCE
     ${CMAKE_CURRENT_SOURCE_DIR}/cracking/arraysAndStrings/urlify.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/cracking/arraysAndStrings/palindromePermutation.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/cracking/arraysAndStrings/oneAway.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/cracking/arraysAndStrings/stringCompression.cpp)
+    ${CMAKE_CURRENT_SOURCE_DIR}/cracking/arraysAndStrings/stringCompression.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/cracking/arraysAndStrings/rotateMatrix.cpp)
 add_library(libCrackingArrayAndStrings SHARED ${libCrackingArrayAndStrings_SOURCE})
 target_link_libraries(${PROJECT_NAME} libCrackingArrayAndStrings)
 
