@@ -10,15 +10,33 @@
 #include "cracking/arraysAndStrings/oneAway.h"
 #include "cracking/arraysAndStrings/stringCompression.h"
 #include "cracking/arraysAndStrings/rotateMatrix.h"
+#include "cracking/cAndCpp/lastKLines.h"
 
 namespace helper {
-void printArray(std::vector<int>& array) {
+
+template<class T>
+void printArray(const std::vector<T>& iArray, const std::string iDelimeter = "\t") {
   // TODO: be able to std::cout << printArray
-  std::cout << "Array = " << std::endl;
-  for (int i = 0; i < array.size(); i++) {
-    std::cout << array[i] << "\t";
+  std::cout << "Array Size = " << iArray.size() << std::endl;
+  for (int i = 0; i < iArray.size(); i++) {
+    std::cout << iArray[i] << iDelimeter;
   }
   std::cout << std::endl;
+}
+
+template<class T>
+bool compareArray(const std::vector<T>& iArray1, const std::vector<T>& iArray2) {
+  if (iArray1.size() != iArray2.size()) {
+    return false;
+  }
+
+  for (int i = 0; i < iArray1.size(); i++) {
+    if (iArray1[i] != iArray2[i]) {
+      return false;
+    }
+  }
+
+  return true;
 }
 
 void printMatrix(const std::vector<std::vector<uint32_t>>& iMatrix, bool ascii_art) {
@@ -266,7 +284,7 @@ TEST(RotateMatrixTest, RotateMatrixTest_odd_size) {
 
 TEST(RotateMatrixTest, RotateMatrixTest_basic) {
   std::ifstream aFile;
-  std::string aFilePath = "./RotateMatrixInput.txt";
+  std::string aFilePath = "./crackingTestInputs/arraysAndStrings/RotateMatrixInput.txt";
   aFile.open(aFilePath);
   std::string aline;
   std::vector<std::vector<uint32_t>> aMatrix;
@@ -292,4 +310,34 @@ TEST(RotateMatrixTest, RotateMatrixTest_basic) {
   std::cout << "After" << std::endl;
   cracking::arraysAndStrings::rotateMatrix(aMatrix);
   helper::printMatrix(aMatrix, true);
+}
+
+TEST(LastKLinesTesst, LastKLines_moreThanK) {
+  const std::string aFilePath = "./crackingTestInputs/cAndCpp/lastKLines/lastKLines_moreThanK.txt";
+  const int K = 3;
+  std::vector<std::string> aOutput = cracking::cAndCpp::printLastKLines(aFilePath, K);
+
+  std::vector<std::string> aExpectedOutput;
+  aExpectedOutput.push_back("\"Line 5 -- Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit...\"");
+  aExpectedOutput.push_back("\"Line 6 -- Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit...\"");
+  aExpectedOutput.push_back("\"Line 7 -- Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit...\"");
+  EXPECT_TRUE(helper::compareArray(aOutput, aExpectedOutput));
+}
+
+TEST(LastKLinesTesst, LastKLines_lessThanK) {
+  const std::string aFilePath = "./crackingTestInputs/cAndCpp/lastKLines/lastKLines_lessThanK.txt";
+  const int K = 3;
+  std::vector<std::string> aOutput = cracking::cAndCpp::printLastKLines(aFilePath, K);
+
+  std::vector<std::string> aExpectedOutput;
+  aExpectedOutput.push_back("\"Line 1 -- Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit...\"");
+  aExpectedOutput.push_back("\"Line 2 -- Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit...\"");
+  EXPECT_TRUE(helper::compareArray(aOutput, aExpectedOutput));
+}
+
+TEST(LastKLinesTesst, LastKLines_nothing) {
+  const std::string aFilePath = "./crackingTestInputs/cAndCpp/lastKLines/lastKLines_nothing.txt";
+  const int K = 3;
+  std::vector<std::string> aOutput = cracking::cAndCpp::printLastKLines(aFilePath, K);
+  EXPECT_EQ(aOutput.size(), 0);
 }

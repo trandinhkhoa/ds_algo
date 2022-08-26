@@ -88,3 +88,66 @@
   - OR = is there a 1 among the 2 ?
   - XOR = are these 2 bits different from each other?
   - AND = are both 1s ?
+
+- C and C++
+  - Classes and Inheritance
+  - Constructors and Destructors
+    - called upon an object's creation
+    - no constructor => use default constructor
+    - when the field to be initialized is constant.
+    ```
+     Person(int a) : id(a) { }
+    ```
+    Here field `id` is assigned before the object is created and before the constructor code is executed.
+    - the destructor is called when the object is destroyed. We dont explicitly call a destructor => cannot take an argument.
+  - Virtual Functions
+    - member functions whose behaviors can be overridden by the derived class
+    - also used when you do not want to implement a member function for the base class
+    - without virtual functions
+    ```
+      Student * p = new Student();
+      p->aboutMe();
+    ```
+    output: "I am a student"
+    ```
+      Person * p = new Student();
+      p->aboutMe();
+    ```
+    Because of `static binding` => output: "I am a person"
+      - `static binding`: determine type at compile time
+    ```
+    class Person {
+      ...
+      virtual aboutMe() {};
+    }
+    class Student {
+      ...
+      aboutMe() {};
+    }
+    Person * p = new Student();
+    p->aboutMe();
+    ```
+    output: "I am a student"
+    - `pure virtual function` => `abstract class` => cannot be instantiated
+    ```
+    class Person {
+      ...
+      virtual aboutMe() = 0;
+    }
+    ```
+
+  - Virtual Destructors
+    - make the destructor of the base class virtual so that the destructor of the derived class can be called
+    - different from normal virtual function: the destructors are chained (those of the base classes are so called)
+  - Operator overloading
+  ```
+  Bookshelf BookShelf::operator+(BookShelf &other) { ... }
+  ```
+  - Pointers and References
+    - Pointer
+      - a variable that holds an address of a variable
+      - the size of a pointer varies depending on the architecture: 32 bits on a 32-bit machine and 64 bits on a 64-bit machine.
+    - Reference
+      - an alias for a pre-existing object
+    - both are useful for pass by reference.
+  - Templates
