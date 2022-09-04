@@ -35,8 +35,7 @@ set (libCrackingArrayAndStrings_SOURCE
 set (libCrackingCAndCpp_SOURCE
     ${CMAKE_CURRENT_SOURCE_DIR}/cracking/cAndCpp/lastKlines.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/cracking/cAndCpp/reverseString.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/cracking/cAndCpp/copyNode.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/cracking/cAndCpp/smartPointer.cpp)
+    ${CMAKE_CURRENT_SOURCE_DIR}/cracking/cAndCpp/copyNode.cpp)
 add_library(libCrackingArrayAndStrings SHARED ${libCrackingArrayAndStrings_SOURCE})
 add_library(libCrackingCAndCpp SHARED ${libCrackingCAndCpp_SOURCE})
 target_link_libraries(${PROJECT_NAME} libCrackingArrayAndStrings libCrackingCAndCpp)

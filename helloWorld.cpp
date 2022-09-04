@@ -407,18 +407,18 @@ TEST(CopyNodeTest, CopyNodeTest_basic) {
 //on MacOS: test for leak: leaks -atExit -- ./build/HelloWorld | grep LEAK:
 TEST(SmartPointerTest, SmartPointerTest_basic) {
   // std::shared_ptr<int> aPtr(new int(3));
-  cracking::cAndCpp::Pointer aPtr1(new int(10));
+  cracking::cAndCpp::Pointer<int> aPtr1(new int(10));
   EXPECT_EQ(*aPtr1._ptr, 10);
-  cracking::cAndCpp::Pointer aPtr2(aPtr1);
+  cracking::cAndCpp::Pointer<int> aPtr2(aPtr1);
   EXPECT_EQ(*aPtr2._ptr, 10);
-  cracking::cAndCpp::Pointer aPtr3(aPtr2);
+  cracking::cAndCpp::Pointer<int> aPtr3(aPtr2);
   EXPECT_EQ(*aPtr3._ptr, 10);
-  cracking::cAndCpp::Pointer aPtr4(aPtr3);
+  cracking::cAndCpp::Pointer<int> aPtr4(aPtr3);
   EXPECT_EQ(*aPtr4._ptr, 10);
-  cracking::cAndCpp::Pointer aPtr5 = aPtr1;
+  cracking::cAndCpp::Pointer<int> aPtr5 = aPtr1;
   EXPECT_EQ(*aPtr5._ptr, 10);
   {
-    cracking::cAndCpp::Pointer aPtr6(new int(60));
+    cracking::cAndCpp::Pointer<int> aPtr6(new int(60));
     EXPECT_EQ(*aPtr6._ptr, 60);
     aPtr5 = aPtr6;
     EXPECT_EQ(*aPtr5._ptr, 60);
@@ -427,17 +427,17 @@ TEST(SmartPointerTest, SmartPointerTest_basic) {
 }
 
 TEST(SmartPointerTest, SmartPointerTest_copyIntoTheOnlyRef_shouldNotLeak) {
-  cracking::cAndCpp::Pointer aPtr1(new int(10));
-  cracking::cAndCpp::Pointer aPtr6(new int(60));
+  cracking::cAndCpp::Pointer<int> aPtr1(new int(10));
+  cracking::cAndCpp::Pointer<int> aPtr6(new int(60));
   EXPECT_EQ(*aPtr6._ptr, 60);
   aPtr1 = aPtr6;
   EXPECT_EQ(*aPtr1._ptr, 60);
 }
 
 TEST(SmartPointerTest, SmartPointerTest_sourcePtrOutOfScope_shouldBeValid) {
-  cracking::cAndCpp::Pointer aPtr1(new int(10));
+  cracking::cAndCpp::Pointer<int> aPtr1(new int(10));
   {
-    cracking::cAndCpp::Pointer aPtr6(new int(60));
+    cracking::cAndCpp::Pointer<int> aPtr6(new int(60));
     EXPECT_EQ(*aPtr6._ptr, 60);
     aPtr1 = aPtr6;
   }
@@ -445,9 +445,9 @@ TEST(SmartPointerTest, SmartPointerTest_sourcePtrOutOfScope_shouldBeValid) {
 }
 
 TEST(SmartPointerTest, SmartPointerTest_assignToUnInitPtr_shouldBeValid_shouldNotLeak) {
-  cracking::cAndCpp::Pointer aPtr1;
+  cracking::cAndCpp::Pointer<int> aPtr1;
   {
-    cracking::cAndCpp::Pointer aPtr6(new int(60));
+    cracking::cAndCpp::Pointer<int> aPtr6(new int(60));
     EXPECT_EQ(*aPtr6._ptr, 60);
     aPtr1 = aPtr6;
   }
@@ -455,7 +455,7 @@ TEST(SmartPointerTest, SmartPointerTest_assignToUnInitPtr_shouldBeValid_shouldNo
 }
 
 TEST(SmartPointerTest, SmartPointerTest_selfAssign) {
-  cracking::cAndCpp::Pointer aPtr6(new int(60));
+  cracking::cAndCpp::Pointer<int> aPtr6(new int(60));
   EXPECT_EQ(*aPtr6._ptr, 60);
   aPtr6 = aPtr6;
   EXPECT_EQ(*aPtr6._ptr, 60);

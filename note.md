@@ -99,6 +99,7 @@
      Person(int a) : id(a) { }
     ```
     Here field `id` is assigned before the object is created and before the constructor code is executed.
+      - The initialization list appears with the constructor definition, not with a declaration that isn't a definition.
     - the destructor is called when the object is destroyed. We dont explicitly call a destructor => cannot take an argument.
   - `delete` vs `free`
   - `new` vs `malloc`
