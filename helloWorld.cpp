@@ -11,6 +11,7 @@
 #include "cracking/arraysAndStrings/stringCompression.h"
 #include "cracking/arraysAndStrings/rotateMatrix.h"
 #include "cracking/cAndCpp/lastKLines.h"
+#include "cracking/cAndCpp/reverseString.h"
 
 namespace helper {
 
@@ -340,4 +341,38 @@ TEST(LastKLinesTesst, LastKLines_nothing) {
   const int K = 3;
   std::vector<std::string> aOutput = cracking::cAndCpp::printLastKLines(aFilePath, K);
   EXPECT_EQ(aOutput.size(), 0);
+}
+
+TEST(ReverseStringTest, ReverseStringTest_nullPointer) {
+  char* aStr = NULL;
+  cracking::cAndCpp::reverseString(aStr);
+}
+
+TEST(ReverseStringTest, ReverseStringTest_lengthOdd) {
+  // https://stackoverflow.com/questions/4083239/proper-way-to-initialize-a-string-in-c
+  char aStr[] = "PokeMon";
+  cracking::cAndCpp::reverseString(aStr);
+  std::string aOutputStr(aStr);
+  EXPECT_EQ(aOutputStr, "noMekoP");
+}
+
+TEST(ReverseStringTest, ReverseStringTest_lengthEven) {
+  char aStr[] = "PokeMo";
+  cracking::cAndCpp::reverseString(aStr);
+  std::string aOutputStr(aStr);
+  EXPECT_EQ(aOutputStr, "oMekoP");
+}
+
+TEST(ReverseStringTest, ReverseStringTest_lengthZero) {
+  char aStr[] = "";
+  cracking::cAndCpp::reverseString(aStr);
+  std::string aOutputStr(aStr);
+  EXPECT_EQ(aOutputStr, "");
+}
+
+TEST(ReverseStringTest, ReverseStringTest_lengthOne) {
+  char aStr[] = "P";
+  cracking::cAndCpp::reverseString(aStr);
+  std::string aOutputStr(aStr);
+  EXPECT_EQ(aOutputStr, "P");
 }
