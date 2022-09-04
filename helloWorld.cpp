@@ -12,6 +12,7 @@
 #include "cracking/arraysAndStrings/rotateMatrix.h"
 #include "cracking/cAndCpp/lastKLines.h"
 #include "cracking/cAndCpp/reverseString.h"
+#include "cracking/cAndCpp/copyNode.h"
 
 namespace helper {
 
@@ -375,4 +376,28 @@ TEST(ReverseStringTest, ReverseStringTest_lengthOne) {
   cracking::cAndCpp::reverseString(aStr);
   std::string aOutputStr(aStr);
   EXPECT_EQ(aOutputStr, "P");
+}
+
+TEST(CopyNodeTest, CopyNodeTest_basic) {
+  cracking::cAndCpp::copyNodeHelper::Node node_1(1);
+  cracking::cAndCpp::copyNodeHelper::Node node_2(20);
+  cracking::cAndCpp::copyNodeHelper::Node node_3(300);
+  cracking::cAndCpp::copyNodeHelper::Node node_4(4000);
+  node_1._ptr1 = &node_4;
+  node_1._ptr2 = &node_2;
+  node_2._ptr2 = &node_3;
+  node_3._ptr2 = &node_1;
+  cracking::cAndCpp::copyNodeHelper::Node* root = &node_1;
+  cracking::cAndCpp::copyNodeHelper::Node* aCopy = cracking::cAndCpp::copyNode(root);
+  // std::cout << "HELLO aCopy." << aCopy->value << std::endl;
+  // std::cout << "HELLO aCopy." << aCopy->_ptr2->value << std::endl;
+  // std::cout << "HELLO aCopy._ptr2@ << " << aCopy->_ptr2 << std::endl;
+  // std::cout << "HELLO node_2@ << " << &node_2 << std::endl;
+  // std::cout << "HELLO aCopy." << aCopy->_ptr2->_ptr2->value << std::endl;
+  EXPECT_EQ(aCopy->value, 1);
+  EXPECT_EQ(aCopy->_ptr1->value, 4000);
+  EXPECT_EQ(aCopy->_ptr2->value, 20);
+  EXPECT_FALSE(aCopy->_ptr2 == &node_2);
+  EXPECT_EQ(aCopy->_ptr2->_ptr2->value, 300);
+  EXPECT_FALSE(aCopy->_ptr2->_ptr2 == &node_3);
 }

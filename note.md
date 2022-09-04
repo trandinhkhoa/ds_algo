@@ -151,3 +151,6 @@
       - an alias for a pre-existing object
     - both are useful for pass by reference.
   - Templates
+  - `volatile`
+  - `lvalue` vs `rvalue`
+  - move semantic
