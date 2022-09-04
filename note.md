@@ -100,6 +100,8 @@
     ```
     Here field `id` is assigned before the object is created and before the constructor code is executed.
     - the destructor is called when the object is destroyed. We dont explicitly call a destructor => cannot take an argument.
+  - `delete` vs `free`
+  - `new` vs `malloc`
   - Virtual Functions
     - member functions whose behaviors can be overridden by the derived class
     - also used when you do not want to implement a member function for the base class
@@ -151,6 +153,55 @@
       - an alias for a pre-existing object
     - both are useful for pass by reference.
   - Templates
+    - Why can templates only be implemented in the header file?
   - `volatile`
   - `lvalue` vs `rvalue`
   - move semantic
+
+- `Bit` and `byte`
+  - `byte`
+    - use for data in storage
+    - memory is only byte addressable:
+      - https://stackoverflow.com/questions/2724449/difference-between-word-addressable-and-byte-addressable
+      - most modern computers are byte addressable
+      - addressability = smallest chunk of memory you can modify without affecting its neighbor
+      -  1 byte is the smallest chunk of memory
+      - A word is just a group of bytes – 2, 4, 8 depending upon the data bus size of the CPU.
+    - 1 byte = 8-bits.
+    - Why 8 ? people experiemented with different size and decided it that way. e.g. 8
+    - e.g.
+      - address of variable `a` 0x16db970bc
+      - address of variable `b` 0x16db970b8
+      - nothing else between `a` and `b`
+      - size of `b` is 4 bytes
+  - bit
+    - use for data in network
+    - data over the network is sent one bit at a time (`serially`)
+      - `byte` used to (and still ?) have different size in different systems -> things were done in bits. As a main point of a network is connecting disparate machines.
+  - When using 32 bit machines, only 4 GB of RAM will be detected and used. 2^32 = 4GB
+- `Stack` and `Heap`
+  - both are on `RAM`
+  - `Stack`:
+    - Variables created on the stack will go out of scope and are automatically deallocated.
+    - Much faster to allocate in comparison to variables on the heap.
+    - Implemented with an actual stack data structure.
+    - Stores local data, return addresses, used for parameter passing.
+    - Can have a stack overflow when too much of the stack is used (mostly from infinite or too deep recursion, very large allocations).
+    - `Stack overflow`
+      - the stack used by the program is larger than allowed
+        - Usually has a maximum size already determined when your program starts.
+        - allowed by whom? the OS?
+        - common cause
+          - infinite/too depp recursion
+          - very large allocations
+    - Data created on the stack can be used without pointers.
+    - You would use the stack if you know exactly how much data you need to allocate before compile time and it is not too big.
+  - `Heap`:
+    - In C++, variables on the heap must be destroyed manually and never fall out of scope. The data is freed with delete, delete[], or free.
+    - Slower to allocate in comparison to variables on the stack.
+    - Used on demand to allocate a block of data for use by the program.
+    - Can have fragmentation when there are a lot of allocations and deallocations.
+    - In C++ or C, data created on the heap will be pointed to by pointers and allocated with new or malloc respectively.
+    - Can have allocation failures if too big of a buffer is requested to be allocated.
+    - You would use the heap if you don't know exactly how much data you will need at run time or if you need to allocate a lot of data.
+    - Responsible for memory leaks.
