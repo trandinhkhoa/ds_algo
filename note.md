@@ -155,9 +155,12 @@
     - both are useful for pass by reference.
   - Templates
     - Why can templates only be implemented in the header file?
+      - The definition of a template must be visible at the point of `implicit instantiation`. which is why template libraries typically provide all template definitions in the headers
+        - `implicit instantiation` https://www.ibm.com/docs/en/zos/2.1.0?topic=instantiation-implicit
   - `volatile`
   - `lvalue` vs `rvalue`
   - move semantic
+  - forward declaration
 
 - `Bit` and `byte`
   - `byte`

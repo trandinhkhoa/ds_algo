@@ -31,7 +31,8 @@ set (libCrackingArrayAndStrings_SOURCE
     ${CMAKE_CURRENT_SOURCE_DIR}/cracking/arraysAndStrings/palindromePermutation.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/cracking/arraysAndStrings/oneAway.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/cracking/arraysAndStrings/stringCompression.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/cracking/arraysAndStrings/rotateMatrix.cpp)
+    ${CMAKE_CURRENT_SOURCE_DIR}/cracking/arraysAndStrings/rotateMatrix.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/cracking/arraysAndStrings/zeroMatrix.cpp)
 set (libCrackingCAndCpp_SOURCE
     ${CMAKE_CURRENT_SOURCE_DIR}/cracking/cAndCpp/lastKlines.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/cracking/cAndCpp/reverseString.cpp

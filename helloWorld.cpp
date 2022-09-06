@@ -11,6 +11,7 @@
 #include "cracking/arraysAndStrings/oneAway.h"
 #include "cracking/arraysAndStrings/stringCompression.h"
 #include "cracking/arraysAndStrings/rotateMatrix.h"
+#include "cracking/arraysAndStrings/zeroMatrix.h"
 #include "cracking/cAndCpp/lastKLines.h"
 #include "cracking/cAndCpp/reverseString.h"
 #include "cracking/cAndCpp/copyNode.h"
@@ -57,9 +58,15 @@ void printMatrix(const std::vector<std::vector<uint32_t>>& iMatrix, bool ascii_a
   }
 }
 
-bool compareMatrix(const std::vector<std::vector<uint32_t>>& iMatrix1, const std::vector<std::vector<uint32_t>>& iMatrix2) {
-  for (int i = 0; i < iMatrix1.size(); i++) {
-    for (int j = 0; j < iMatrix1.size(); j++) {
+bool compareMatrix(const std::vector<std::vector<uint32_t>>& iMatrix1,
+                  const unsigned int height_1, const unsigned int width_1,
+                  const std::vector<std::vector<uint32_t>>& iMatrix2,
+                  const unsigned int height_2, const unsigned int width_2) {
+  if (width_1 != width_2 || height_1 != height_2) {
+    return false;
+  }
+  for (int i = 0; i < height_1; i++) {
+    for (int j = 0; j < width_1; j++) {
       if (iMatrix1[i][j] != iMatrix2[i][j]) {
         return false;
       }
@@ -254,9 +261,11 @@ TEST(RotateMatrixTest, RotateMatrixTest_even_size) {
 
   u_int32_t aOldValue = aExpectedMatrix_1[0][0];
   aExpectedMatrix_1[0][0] = -1;
-  EXPECT_FALSE(helper::compareMatrix(aMatrix, aExpectedMatrix_1));
+  EXPECT_FALSE(helper::compareMatrix(aMatrix, aMatrix.size(), aMatrix.size(),
+                                    aExpectedMatrix_1, aExpectedMatrix_1.size(), aExpectedMatrix_1.size()));
   aExpectedMatrix_1[0][0] = aOldValue;
-  EXPECT_TRUE(helper::compareMatrix(aMatrix, aExpectedMatrix_1));
+  EXPECT_TRUE(helper::compareMatrix(aMatrix, aMatrix.size(), aMatrix.size(),
+                                    aExpectedMatrix_1, aExpectedMatrix_1.size(), aExpectedMatrix_1.size()));
 }
 
 TEST(RotateMatrixTest, RotateMatrixTest_odd_size) {
@@ -281,9 +290,11 @@ TEST(RotateMatrixTest, RotateMatrixTest_odd_size) {
 
   u_int32_t aOldValue = aExpectedMatrix_1[0][0];
   aExpectedMatrix_1[0][0] = -1;
-  EXPECT_FALSE(helper::compareMatrix(aMatrix, aExpectedMatrix_1));
+  EXPECT_FALSE(helper::compareMatrix(aMatrix, aMatrix.size(), aMatrix.size(),
+                                    aExpectedMatrix_1, aExpectedMatrix_1.size(), aExpectedMatrix_1.size()));
   aExpectedMatrix_1[0][0] = aOldValue;
-  EXPECT_TRUE(helper::compareMatrix(aMatrix, aExpectedMatrix_1));
+  EXPECT_TRUE(helper::compareMatrix(aMatrix, aMatrix.size(), aMatrix.size(),
+                                    aExpectedMatrix_1, aExpectedMatrix_1.size(), aExpectedMatrix_1.size()));
 }
 
 TEST(RotateMatrixTest, RotateMatrixTest_basic) {
@@ -314,6 +325,99 @@ TEST(RotateMatrixTest, RotateMatrixTest_basic) {
   std::cout << "After" << std::endl;
   cracking::arraysAndStrings::rotateMatrix(aMatrix);
   helper::printMatrix(aMatrix, true);
+}
+
+TEST(ZeroMatrixTest, ZeroMatrixTest_basic) {
+  std::vector<std::vector<uint32_t>> aMatrix = {
+    {1, 3, 4, 1, 4},
+    {1, 0, 4, 1, 4},
+    {1, 3, 0, 0, 4},
+    {1, 3, 4, 0, 4},
+    {1, 3, 0, 1, 4},
+    {0, 3, 0, 1, 4},
+  };
+
+  std::vector<std::vector<uint32_t>> aExpectMatrix = {
+    {0, 0, 0, 0, 4},
+    {0, 0, 0, 0, 0},
+    {0, 0, 0, 0, 0},
+    {0, 0, 0, 0, 0},
+    {0, 0, 0, 0, 0},
+    {0, 0, 0, 0, 0},
+  };
+
+  cracking::arraysAndStrings::zeroMatrix_2(aMatrix, 6, 5);
+  EXPECT_TRUE(helper::compareMatrix(aMatrix, 6, 5,
+                                    aExpectMatrix, 6, 5));
+}
+
+TEST(ZeroMatrixTest, ZeroMatrixTest_basic_2) {
+  std::vector<std::vector<uint32_t>> aMatrix = {
+    {1, 3, 4, 1, 4},
+    {1, 0, 4, 1, 4},
+    {1, 3, 9, 8, 4},
+    {1, 3, 4, 7, 4},
+    {1, 3, 8, 0, 4},
+    {2, 3, 9, 1, 4},
+  };
+  std::vector<std::vector<uint32_t>> aExpectedMatrix = {
+    {1, 0, 4, 0, 4},
+    {0, 0, 0, 0, 0},
+    {1, 0, 9, 0, 4},
+    {1, 0, 4, 0, 4},
+    {0, 0, 0, 0, 0},
+    {2, 0, 9, 0, 4},
+  };
+
+  cracking::arraysAndStrings::zeroMatrix_2(aMatrix, 6, 5);
+  EXPECT_TRUE(helper::compareMatrix(aMatrix, 6, 5,
+                                    aExpectedMatrix, 6, 5));
+}
+
+TEST(ZeroMatrixTest, ZeroMatrixTest_basic_3) {
+  std::vector<std::vector<uint32_t>> aMatrix = {
+    {0, 3, 4, 1, 0},
+    {1, 2, 4, 1, 4},
+    {1, 3, 9, 8, 4},
+    {1, 3, 4, 7, 4},
+    {1, 3, 8, 9, 4},
+    {0, 3, 9, 1, 0},
+  };
+  std::vector<std::vector<uint32_t>> aExpectedMatrix = {
+    {0, 0, 0, 0, 0},
+    {0, 2, 4, 1, 0},
+    {0, 3, 9, 8, 0},
+    {0, 3, 4, 7, 0},
+    {0, 3, 8, 9, 0},
+    {0, 0, 0, 0, 0},
+  };
+
+  cracking::arraysAndStrings::zeroMatrix_2(aMatrix, 6, 5);
+  EXPECT_TRUE(helper::compareMatrix(aMatrix, 6, 5,
+                                    aExpectedMatrix, 6, 5));
+}
+
+TEST(ZeroMatrixTest, ZeroMatrixTest_basic_4) {
+  std::vector<std::vector<uint32_t>> aMatrix = {
+    {1, 3, 4, 1, 0},
+    {1, 0, 4, 1, 4},
+    {1, 3, 0, 0, 4},
+    {1, 3, 4, 9, 4},
+    {1, 3, 0, 1, 4},
+    {1, 3, 0, 1, 4},
+  };
+  std::vector<std::vector<uint32_t>> aExpectedMatrix = {
+    {0, 0, 0, 0, 0},
+    {0, 0, 0, 0, 0},
+    {0, 0, 0, 0, 0},
+    {1, 0, 0, 0, 0},
+    {0, 0, 0, 0, 0},
+    {0, 0, 0, 0, 0},
+  };
+
+  cracking::arraysAndStrings::zeroMatrix_2(aMatrix, 6, 5);
+  EXPECT_TRUE(helper::compareMatrix(aMatrix, 6, 5,
+                                    aExpectedMatrix, 6, 5));
 }
 
 TEST(LastKLinesTesst, LastKLines_moreThanK) {
