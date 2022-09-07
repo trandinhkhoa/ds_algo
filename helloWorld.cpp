@@ -12,6 +12,7 @@
 #include "cracking/arraysAndStrings/stringCompression.h"
 #include "cracking/arraysAndStrings/rotateMatrix.h"
 #include "cracking/arraysAndStrings/zeroMatrix.h"
+#include "cracking/arraysAndStrings/stringRotation.h"
 #include "cracking/cAndCpp/lastKLines.h"
 #include "cracking/cAndCpp/reverseString.h"
 #include "cracking/cAndCpp/copyNode.h"
@@ -418,6 +419,41 @@ TEST(ZeroMatrixTest, ZeroMatrixTest_basic_4) {
   cracking::arraysAndStrings::zeroMatrix_2(aMatrix, 6, 5);
   EXPECT_TRUE(helper::compareMatrix(aMatrix, 6, 5,
                                     aExpectedMatrix, 6, 5));
+}
+
+TEST(StringRotationTest, StringRotationTest_basic_1) {
+  std::string str_1 = "erbottlewat";
+  std::string str_2 = "waterbottle";
+  EXPECT_TRUE(cracking::arraysAndStrings::isStringRotation(str_1, str_2));
+  EXPECT_TRUE(cracking::arraysAndStrings::isStringRotation_2(str_1, str_2));
+}
+
+TEST(StringRotationTest, StringRotationTest_basic_2) {
+  std::string str_1 = "racecar";
+  std::string str_2 = "racecar";
+  EXPECT_TRUE(cracking::arraysAndStrings::isStringRotation(str_1, str_2));
+  EXPECT_TRUE(cracking::arraysAndStrings::isStringRotation_2(str_1, str_2));
+}
+
+TEST(StringRotationTest, StringRotationTest_basic_3) {
+  std::string str_1 = "";
+  std::string str_2 = "";
+  EXPECT_TRUE(cracking::arraysAndStrings::isStringRotation(str_1, str_2));
+  EXPECT_TRUE(cracking::arraysAndStrings::isStringRotation_2(str_1, str_2));
+}
+
+TEST(StringRotationTest, StringRotationTest_basic_4) {
+  std::string str_1 = "a";
+  std::string str_2 = "a";
+  EXPECT_TRUE(cracking::arraysAndStrings::isStringRotation(str_1, str_2));
+  EXPECT_TRUE(cracking::arraysAndStrings::isStringRotation_2(str_1, str_2));
+}
+
+TEST(StringRotationTest, StringRotationTest_basic_5) {
+  std::string str_1 = "abcd";
+  std::string str_2 = "adcb";
+  EXPECT_FALSE(cracking::arraysAndStrings::isStringRotation(str_1, str_2));
+  EXPECT_FALSE(cracking::arraysAndStrings::isStringRotation_2(str_1, str_2));
 }
 
 TEST(LastKLinesTesst, LastKLines_moreThanK) {
