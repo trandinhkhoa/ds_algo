@@ -18,6 +18,8 @@
 #include "cracking/cAndCpp/copyNode.h"
 #include "cracking/cAndCpp/smartPointer.h"
 
+#include "dataStructures/linkedList.h"
+
 namespace helper {
 
 template<class T>
@@ -520,6 +522,7 @@ TEST(ReverseStringTest, ReverseStringTest_lengthOne) {
   EXPECT_EQ(aOutputStr, "P");
 }
 
+// the class Node leaks memory
 TEST(CopyNodeTest, CopyNodeTest_basic) {
   cracking::cAndCpp::copyNodeHelper::Node node_1(1);
   cracking::cAndCpp::copyNodeHelper::Node node_2(20);
@@ -531,11 +534,6 @@ TEST(CopyNodeTest, CopyNodeTest_basic) {
   node_3._ptr2 = &node_1;
   cracking::cAndCpp::copyNodeHelper::Node* root = &node_1;
   cracking::cAndCpp::copyNodeHelper::Node* aCopy = cracking::cAndCpp::copyNode(root);
-  // std::cout << "HELLO aCopy." << aCopy->value << std::endl;
-  // std::cout << "HELLO aCopy." << aCopy->_ptr2->value << std::endl;
-  // std::cout << "HELLO aCopy._ptr2@ << " << aCopy->_ptr2 << std::endl;
-  // std::cout << "HELLO node_2@ << " << &node_2 << std::endl;
-  // std::cout << "HELLO aCopy." << aCopy->_ptr2->_ptr2->value << std::endl;
   EXPECT_EQ(aCopy->value, 1);
   EXPECT_EQ(aCopy->_ptr1->value, 4000);
   EXPECT_EQ(aCopy->_ptr2->value, 20);
@@ -599,4 +597,25 @@ TEST(SmartPointerTest, SmartPointerTest_selfAssign) {
   EXPECT_EQ(*aPtr6._ptr, 60);
   aPtr6 = aPtr6;
   EXPECT_EQ(*aPtr6._ptr, 60);
+}
+
+// https://stackoverflow.com/questions/59122213/how-to-use-leaks-command-line-tool-to-find-memory-leaks
+TEST(LinkedListTest, LinkedListTest_basic) {
+  dataStructures::LinkedList<std::string> aLinkedList;
+  aLinkedList.append("first");
+  aLinkedList.append("second");
+  aLinkedList.append("third");
+  aLinkedList.append("fourth");
+
+  dataStructures::LinkedList<std::string>::WrappedNode* aNode;
+  aNode = aLinkedList.begin();
+  // TODO: what if aLinkedList is destroyed here ? aNode would be a dangling pointer
+  std::vector<std::string> aValues;
+  while (aNode) {
+    aValues.push_back(aNode->value);
+    aNode = aNode->next;
+  }
+
+  std::vector<std::string> aExpectedValues{"first", "second", "third", "fourth"} ;
+  EXPECT_TRUE(helper::compareArray(aValues, aExpectedValues));
 }

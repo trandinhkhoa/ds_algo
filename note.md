@@ -161,6 +161,8 @@
   - `lvalue` vs `rvalue`
   - move semantic
   - forward declaration
+  - `friend`
+    - The friend declaration appears in a class body and grants a function or another class access to private and protected members of the class where the friend declaration appears.
 
 - `Bit` and `byte`
   - `byte`
@@ -209,3 +211,10 @@
     - Can have allocation failures if too big of a buffer is requested to be allocated.
     - You would use the heap if you don't know exactly how much data you will need at run time or if you need to allocate a lot of data.
     - Responsible for memory leaks.
+
+- Data structures
+  - Linked List
+    - Why is it better to wrap the Node class with a LinkedList class
+      - https://www.reddit.com/r/learnprogramming/comments/77qajp/why_is_it_better_to_wrap_the_node_class_with_a/
+      - https://stackoverflow.com/questions/65486760/intrinsic-benefit-of-using-a-linkedlist-class-to-point-to-head-node-vs-just-usi
+    - https://codereview.stackexchange.com/questions/190590/singly-linked-list-implementation-c
