@@ -1,9 +1,13 @@
 #include <iostream>
 #include <fstream>
 #include <memory>
+#include <list>
+
 #include <gtest/gtest.h>
+
 #include "adder.h"
 #include "sort.h"
+
 #include "cracking/arraysAndStrings/isUnique.h"
 #include "cracking/arraysAndStrings/checkPermutation.h"
 #include "cracking/arraysAndStrings/urlify.h"
@@ -13,6 +17,9 @@
 #include "cracking/arraysAndStrings/rotateMatrix.h"
 #include "cracking/arraysAndStrings/zeroMatrix.h"
 #include "cracking/arraysAndStrings/stringRotation.h"
+
+#include "cracking/linkedLists/removeDups.h"
+
 #include "cracking/cAndCpp/lastKLines.h"
 #include "cracking/cAndCpp/reverseString.h"
 #include "cracking/cAndCpp/copyNode.h"
@@ -618,4 +625,32 @@ TEST(LinkedListTest, LinkedListTest_basic) {
 
   std::vector<std::string> aExpectedValues{"first", "second", "third", "fourth"} ;
   EXPECT_TRUE(helper::compareArray(aValues, aExpectedValues));
+}
+
+TEST(RemoveDupsTest, RemoveDupsTest_basic) {
+  std::list<int> aLinkedList{1, 3, 1, 2, 3, 4};
+
+
+  cracking::linkedLists::removeDups(aLinkedList);
+
+  std::vector<int> aExpectedVector{1, 3, 2, 4};
+
+  // just to show that both way to get the iterator works
+  std::vector<int> aOutputVector{ aLinkedList.begin(), std::end(aLinkedList)};
+
+  EXPECT_TRUE(helper::compareArray(aOutputVector, aExpectedVector));
+}
+
+TEST(RemoveDupsTest, RemoveDupsTest_withoutBuffer_basic) {
+  std::list<int> aLinkedList{1, 3, 1, 2, 3, 4};
+
+
+  cracking::linkedLists::removeDups_withoutBuffer(aLinkedList);
+
+  std::vector<int> aExpectedVector{1, 3, 2, 4};
+
+  // just to show that both way to get the iterator works
+  std::vector<int> aOutputVector{ aLinkedList.begin(), std::end(aLinkedList)};
+
+  EXPECT_TRUE(helper::compareArray(aOutputVector, aExpectedVector));
 }
