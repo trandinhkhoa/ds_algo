@@ -20,6 +20,7 @@
 
 #include "cracking/linkedLists/removeDups.h"
 #include "cracking/linkedLists/returnKthToLast.h"
+#include "cracking/linkedLists/deleteMiddleNode.h"
 
 #include "cracking/cAndCpp/lastKLines.h"
 #include "cracking/cAndCpp/reverseString.h"
@@ -530,7 +531,7 @@ TEST(ReverseStringTest, ReverseStringTest_lengthOne) {
   EXPECT_EQ(aOutputStr, "P");
 }
 
-// the class Node leaks memory
+// the copyNode method leaks memory
 TEST(CopyNodeTest, CopyNodeTest_basic) {
   cracking::cAndCpp::copyNodeHelper::Node node_1(1);
   cracking::cAndCpp::copyNodeHelper::Node node_2(20);
@@ -548,6 +549,7 @@ TEST(CopyNodeTest, CopyNodeTest_basic) {
   EXPECT_FALSE(aCopy->_ptr2 == &node_2);
   EXPECT_EQ(aCopy->_ptr2->_ptr2->value, 300);
   EXPECT_FALSE(aCopy->_ptr2->_ptr2 == &node_3);
+  std::cout << "DONE" << std::endl;
 }
 
 //on MacOS: test for leak: leaks -atExit -- ./build/HelloWorld | grep LEAK:
@@ -670,4 +672,38 @@ TEST(ReturnKthToLastTest, ReturnKthToLastTest_kLargerThanSize) {
   int aResult = cracking::linkedLists::returnKthToLast(aLinkedList, 2);
 
   EXPECT_EQ(aResult, INT32_MIN);
+}
+
+TEST(DeleteMiddleNodeTest, DeleteMiddleNodeTest_basic) {
+  std::function<void(cracking::linkedLists::deleteMiddleNodeHelper::Node*&, int)> setNodeToBeDeleted = [](cracking::linkedLists::deleteMiddleNodeHelper::Node*& iPtr, int k){
+    for (int i = 0; i < k; i++) {
+      iPtr = iPtr->next;
+    }
+  };
+
+  auto listToVector = [](const cracking::linkedLists::deleteMiddleNodeHelper::Node& iHead, std::vector<int>& oVector){
+    const cracking::linkedLists::deleteMiddleNodeHelper::Node* aIter = &iHead;
+    while (aIter) {
+      oVector.push_back(aIter->data);
+      aIter = aIter->next;
+    }
+  };
+
+  cracking::linkedLists::deleteMiddleNodeHelper::Node aHead(1);
+  aHead.append(3);
+  aHead.append(10);
+  aHead.append(20);
+  aHead.append(9);
+  aHead.append(4);
+
+  cracking::linkedLists::deleteMiddleNodeHelper::Node* aNodeToBeDeleted = &aHead;
+  setNodeToBeDeleted(aNodeToBeDeleted, 3);
+
+  cracking::linkedLists::deleteMiddleNode(aNodeToBeDeleted);
+
+  std::vector<int> aOutputVector;
+  listToVector(aHead, aOutputVector);
+
+  std::vector<int> aExpectedVector{1, 3, 10, 9, 4};
+  EXPECT_TRUE(helper::compareArray(aOutputVector, aExpectedVector));
 }
