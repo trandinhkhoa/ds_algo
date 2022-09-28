@@ -19,6 +19,7 @@
 #include "cracking/arraysAndStrings/stringRotation.h"
 
 #include "cracking/linkedLists/removeDups.h"
+#include "cracking/linkedLists/returnKthToLast.h"
 
 #include "cracking/cAndCpp/lastKLines.h"
 #include "cracking/cAndCpp/reverseString.h"
@@ -653,4 +654,20 @@ TEST(RemoveDupsTest, RemoveDupsTest_withoutBuffer_basic) {
   std::vector<int> aOutputVector{ aLinkedList.begin(), std::end(aLinkedList)};
 
   EXPECT_TRUE(helper::compareArray(aOutputVector, aExpectedVector));
+}
+
+TEST(ReturnKthToLastTest, ReturnKthToLastTest_basic) {
+  std::list<int> aLinkedList{1, 3, 1, 2, 9, 4};
+
+  int aResult = cracking::linkedLists::returnKthToLast(aLinkedList, 2);
+
+  EXPECT_EQ(aResult, 9);
+}
+
+TEST(ReturnKthToLastTest, ReturnKthToLastTest_kLargerThanSize) {
+  std::list<int> aLinkedList{1};
+
+  int aResult = cracking::linkedLists::returnKthToLast(aLinkedList, 2);
+
+  EXPECT_EQ(aResult, INT32_MIN);
 }
