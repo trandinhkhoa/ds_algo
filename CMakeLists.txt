@@ -37,13 +37,19 @@ set (libCrackingArrayAndStrings_SOURCE
 set (libCrackingLinkedLists_SOURCE
     ${CMAKE_CURRENT_SOURCE_DIR}/cracking/linkedLists/removeDups.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/cracking/linkedLists/returnKthToLast.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/cracking/linkedLists/deleteMiddleNode.cpp)
+    ${CMAKE_CURRENT_SOURCE_DIR}/cracking/linkedLists/deleteMiddleNode.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/cracking/linkedLists/partition.cpp)
 set (libCrackingCAndCpp_SOURCE
     ${CMAKE_CURRENT_SOURCE_DIR}/cracking/cAndCpp/lastKlines.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/cracking/cAndCpp/reverseString.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/cracking/cAndCpp/copyNode.cpp)
+
 add_library(libCrackingArrayAndStrings SHARED ${libCrackingArrayAndStrings_SOURCE})
+
 add_library(libCrackingLinkedLists SHARED ${libCrackingLinkedLists_SOURCE})
+target_include_directories(libCrackingLinkedLists
+                              PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/dataStructures")
+
 add_library(libCrackingCAndCpp SHARED ${libCrackingCAndCpp_SOURCE})
 target_link_libraries(${PROJECT_NAME} libCrackingArrayAndStrings libCrackingLinkedLists libCrackingCAndCpp)
 

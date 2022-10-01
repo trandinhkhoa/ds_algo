@@ -21,6 +21,7 @@
 #include "cracking/linkedLists/removeDups.h"
 #include "cracking/linkedLists/returnKthToLast.h"
 #include "cracking/linkedLists/deleteMiddleNode.h"
+#include "cracking/linkedLists/partition.h"
 
 #include "cracking/cAndCpp/lastKLines.h"
 #include "cracking/cAndCpp/reverseString.h"
@@ -28,6 +29,7 @@
 #include "cracking/cAndCpp/smartPointer.h"
 
 #include "dataStructures/linkedList.h"
+#include "dataStructures/singlyLinkedListNode.h"
 
 namespace helper {
 
@@ -706,4 +708,48 @@ TEST(DeleteMiddleNodeTest, DeleteMiddleNodeTest_basic) {
 
   std::vector<int> aExpectedVector{1, 3, 10, 9, 4};
   EXPECT_TRUE(helper::compareArray(aOutputVector, aExpectedVector));
+}
+
+TEST(PartitionTest, Partition_basic) {
+  auto listToVector = [](const dataStructures::SinglyLinkedListNode& iHead, std::vector<int>& oVector){
+    oVector.clear();
+    const dataStructures::SinglyLinkedListNode* aIter = &iHead;
+    while (aIter) {
+      oVector.push_back(aIter->data);
+      aIter = aIter->next;
+    }
+  };
+
+  auto check = [](const std::vector<int>& iVector, int iPartitionValue){
+    bool beforePartition = true;
+    for (int i = 0; i < iVector.size(); i++) {
+      if ((iVector[i] >= iPartitionValue) && (beforePartition)) {
+        beforePartition = false;
+      }
+      if ((iVector[i] < iPartitionValue) && (!beforePartition)) {
+        return false;
+      }
+    }
+    return true;
+  };
+
+  int aPartitionValue = 5;
+
+  std::vector<int> aVectorToTestCheck_1{1, 1, 5, 1, 1};
+  EXPECT_FALSE(check(aVectorToTestCheck_1, aPartitionValue));
+  std::vector<int> aVectorToTestCheck_2{1};
+  EXPECT_TRUE(check(aVectorToTestCheck_2, aPartitionValue));
+  std::vector<int> aVectorToTestCheck_3{1, 1};
+  EXPECT_TRUE(check(aVectorToTestCheck_3, aPartitionValue));
+  std::vector<int> aVectorToTestCheck_4{2, 1, 3, 10, 5};
+  EXPECT_TRUE(check(aVectorToTestCheck_4, aPartitionValue));
+
+  dataStructures::SinglyLinkedListNode aHead{3, 5,8, 5, 10, 2, 1};
+  aHead.append(0);
+
+  dataStructures::SinglyLinkedListNode* aNewHead = cracking::linkedLists::partition(&aHead, aPartitionValue);
+
+  std::vector<int> aOutputVector;
+  listToVector(*aNewHead, aOutputVector);
+  EXPECT_TRUE(check(aOutputVector, aPartitionValue));
 }

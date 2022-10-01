@@ -42,7 +42,7 @@
     - Prefer to pass full absolute paths to libraries where possible. since this ensures the correct library will always be linked.
     - Situations where a library search path may be needed: https://cmake.org/cmake/help/latest/command/target_link_directories.html
 
-  - `target_link_directories`
+  - `target_link_libraries`
   ```
   target_link_libraries(<target>
                         <PRIVATE|PUBLIC|INTERFACE> <item>...
@@ -52,6 +52,11 @@
       - A library target name
       - A full path to a library file:
       - more: https://cmake.org/cmake/help/latest/command/target_link_libraries.html#command:target_link_libraries
+  - `target_include_directories`
+    - https://leimao.github.io/blog/CMake-Public-Private-Interface/
+    - `PUBLIC`: All the directories following `PUBLIC` will be used for the current target and the other targets that have dependencies on the current target, i.e., appending the directories to `INCLUDE_DIRECTORIES` and `INTERFACE_INCLUDE_DIRECTORIES`.
+    - `PRIVATE`: All the include directories following `PRIVATE` will be used for the current target only, i.e., appending the directories to `INCLUDE_DIRECTORIES`.
+    - `INTERFACE`: All the include directories following `INTERFACE` will NOT be used for the current target but will be accessible for the other targets that have dependencies on the current target, i.e., appending the directories to `INTERFACE_INCLUDE_DIRECTORIES`.
 - Debug CMake project in VSCode:
   - have your `CMakeLists.txt` ready
   - install CMake Tools
@@ -164,6 +169,7 @@
   - `friend`
     - The friend declaration appears in a class body and grants a function or another class access to private and protected members of the class where the friend declaration appears.
   - `container`
+    - https://embeddedartistry.com/blog/2017/08/02/an-overview-of-c-stl-containers/
 
 - `Bit` and `byte`
   - `byte`
