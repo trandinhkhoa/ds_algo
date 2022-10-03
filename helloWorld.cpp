@@ -23,6 +23,7 @@
 #include "cracking/linkedLists/deleteMiddleNode.h"
 #include "cracking/linkedLists/partition.h"
 #include "cracking/linkedLists/sumLists.h"
+#include "cracking/linkedLists/palindrome.h"
 
 #include "cracking/cAndCpp/lastKLines.h"
 #include "cracking/cAndCpp/reverseString.h"
@@ -841,4 +842,34 @@ TEST(SumListsTest, SumListsReverse_longerOperandList_longerResult) {
 
   std::vector<uint16_t> aExpectedVector{1, 0, 9, 8};
   EXPECT_TRUE(helper::compareArray(aOutputVector, aExpectedVector));
+}
+
+TEST(PalindromeTest, PalindromeTest_basic) {
+  std::list<int> aList{9, 8, 7, 8, 9};
+
+  EXPECT_TRUE(cracking::linkedLists::palindrome(aList));
+}
+
+TEST(PalindromeTest, PalindromeTest_lengthEven) {
+  std::list<int> aList{9, 8, 8, 9};
+
+  EXPECT_TRUE(cracking::linkedLists::palindrome(aList));
+}
+
+TEST(PalindromeTest, PalindromeTest_lengthOne) {
+  std::list<int> aList{1};
+
+  EXPECT_TRUE(cracking::linkedLists::palindrome(aList));
+}
+
+TEST(PalindromeTest, PalindromeTest_negative) {
+  std::list<int> aList{1, 2, 7, 8, 9};
+
+  EXPECT_FALSE(cracking::linkedLists::palindrome(aList));
+}
+
+TEST(PalindromeTest, PalindromeTest_negative_2) {
+  std::list<int> aList{9, 3, 8, 9};
+
+  EXPECT_FALSE(cracking::linkedLists::palindrome(aList));
 }
