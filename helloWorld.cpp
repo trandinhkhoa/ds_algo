@@ -22,6 +22,7 @@
 #include "cracking/linkedLists/returnKthToLast.h"
 #include "cracking/linkedLists/deleteMiddleNode.h"
 #include "cracking/linkedLists/partition.h"
+#include "cracking/linkedLists/sumLists.h"
 
 #include "cracking/cAndCpp/lastKLines.h"
 #include "cracking/cAndCpp/reverseString.h"
@@ -752,4 +753,92 @@ TEST(PartitionTest, Partition_basic) {
   std::vector<int> aOutputVector;
   listToVector(*aNewHead, aOutputVector);
   EXPECT_TRUE(check(aOutputVector, aPartitionValue));
+}
+
+TEST(SumListsTest, SumLists_basic) {
+  std::list<uint16_t> aList_1{7, 1, 6};
+  std::list<uint16_t> aList_2{5, 9, 2};
+
+  std::list<uint16_t> aResult = cracking::linkedLists::sumLists(aList_1, aList_2);
+  std::vector<uint16_t> aOutputVector{ aResult.begin(), std::end(aResult)};
+
+  std::vector<uint16_t> aExpectedVector{2, 1, 9};
+  EXPECT_TRUE(helper::compareArray(aOutputVector, aExpectedVector));
+}
+
+TEST(SumListsTest, SumLists_longerResult) {
+  std::list<uint16_t> aList_1{9, 7, 8};
+  std::list<uint16_t> aList_2{6, 8, 5};
+
+  std::list<uint16_t> aResult = cracking::linkedLists::sumLists(aList_1, aList_2);
+  std::vector<uint16_t> aOutputVector{ aResult.begin(), std::end(aResult)};
+
+  std::vector<uint16_t> aExpectedVector{5, 6, 4, 1};
+  EXPECT_TRUE(helper::compareArray(aOutputVector, aExpectedVector));
+}
+
+TEST(SumListsTest, SumLists_longerOperandList) {
+  std::list<uint16_t> aList_1{9, 9, 9, 2};
+  std::list<uint16_t> aList_2{9, 9};
+
+  std::list<uint16_t> aResult = cracking::linkedLists::sumLists(aList_1, aList_2);
+  std::vector<uint16_t> aOutputVector{ aResult.begin(), std::end(aResult)};
+
+  std::vector<uint16_t> aExpectedVector{8, 9, 0, 3};
+  EXPECT_TRUE(helper::compareArray(aOutputVector, aExpectedVector));
+}
+
+TEST(SumListsTest, SumLists_longerOperandList_longerResult) {
+  std::list<uint16_t> aList_1{9, 9, 9};
+  std::list<uint16_t> aList_2{9, 9};
+
+  std::list<uint16_t> aResult = cracking::linkedLists::sumLists(aList_1, aList_2);
+  std::vector<uint16_t> aOutputVector{ aResult.begin(), std::end(aResult)};
+
+  std::vector<uint16_t> aExpectedVector{8, 9, 0, 1};
+  EXPECT_TRUE(helper::compareArray(aOutputVector, aExpectedVector));
+}
+
+TEST(SumListsTest, SumListsReverse_basic) {
+  std::list<uint16_t> aList_1{6, 1, 7};
+  std::list<uint16_t> aList_2{2, 9, 5};
+
+  std::list<uint16_t> aResult = cracking::linkedLists::sumListsReverse(aList_1, aList_2);
+  std::vector<uint16_t> aOutputVector{ aResult.begin(), std::end(aResult)};
+
+  std::vector<uint16_t> aExpectedVector{9, 1, 2};
+  EXPECT_TRUE(helper::compareArray(aOutputVector, aExpectedVector));
+}
+
+TEST(SumListsTest, SumListsReverse_longerResult) {
+  std::list<uint16_t> aList_1{8, 7, 9};
+  std::list<uint16_t> aList_2{5, 8, 6};
+
+  std::list<uint16_t> aResult = cracking::linkedLists::sumListsReverse(aList_1, aList_2);
+  std::vector<uint16_t> aOutputVector{ aResult.begin(), std::end(aResult)};
+
+  std::vector<uint16_t> aExpectedVector{1, 4, 6, 5};
+  EXPECT_TRUE(helper::compareArray(aOutputVector, aExpectedVector));
+}
+
+TEST(SumListsTest, SumListsReverse_longerOperandList) {
+  std::list<uint16_t> aList_1{2, 9, 9, 9};
+  std::list<uint16_t> aList_2{9, 9};
+
+  std::list<uint16_t> aResult = cracking::linkedLists::sumListsReverse(aList_1, aList_2);
+  std::vector<uint16_t> aOutputVector{ aResult.begin(), std::end(aResult)};
+
+  std::vector<uint16_t> aExpectedVector{3, 0, 9, 8};
+  EXPECT_TRUE(helper::compareArray(aOutputVector, aExpectedVector));
+}
+
+TEST(SumListsTest, SumListsReverse_longerOperandList_longerResult) {
+  std::list<uint16_t> aList_1{9, 9, 9};
+  std::list<uint16_t> aList_2{9, 9};
+
+  std::list<uint16_t> aResult = cracking::linkedLists::sumListsReverse(aList_1, aList_2);
+  std::vector<uint16_t> aOutputVector{ aResult.begin(), std::end(aResult)};
+
+  std::vector<uint16_t> aExpectedVector{1, 0, 9, 8};
+  EXPECT_TRUE(helper::compareArray(aOutputVector, aExpectedVector));
 }
