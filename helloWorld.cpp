@@ -24,6 +24,7 @@
 #include "cracking/linkedLists/partition.h"
 #include "cracking/linkedLists/sumLists.h"
 #include "cracking/linkedLists/palindrome.h"
+#include "cracking/linkedLists/intersection.h"
 
 #include "cracking/cAndCpp/lastKLines.h"
 #include "cracking/cAndCpp/reverseString.h"
@@ -872,4 +873,58 @@ TEST(PalindromeTest, PalindromeTest_negative_2) {
   std::list<int> aList{9, 3, 8, 9};
 
   EXPECT_FALSE(cracking::linkedLists::palindrome(aList));
+}
+
+TEST(IntersectionTest, IntersectionTest_basic) {
+  int node_1_0 = 9;
+  int node_1_1 = 18;
+  int node_1_2 = 7;
+  int node_1_3 = 4;
+  int node_1_4 = 5;
+  int node_1_5 = 6;
+
+  int node_2_0 = 19;
+  int node_2_1 = 18;
+
+  std::list<int*> iList_1{&node_1_0, &node_1_1, &node_1_2, &node_1_3, &node_1_4, &node_1_5};
+  std::list<int*> iList_2{&node_2_0, &node_2_1, &node_1_3, &node_1_4, &node_1_5};
+  int* aIntersection = cracking::linkedLists::intersection(iList_1, iList_2);
+
+  EXPECT_EQ(aIntersection, &node_1_3);
+}
+
+TEST(IntersectionTest, IntersectionTest_diffLength_intersectAtHead) {
+  int node_1_0 = 9;
+  int node_1_1 = 18;
+  int node_1_2 = 7;
+  int node_1_3 = 4;
+  int node_1_4 = 5;
+  int node_1_5 = 6;
+
+  int node_2_0 = 19;
+  int node_2_1 = 18;
+
+  std::list<int*> iList_1{&node_1_0, &node_1_1, &node_1_2, &node_1_3, &node_1_4, &node_1_5};
+  std::list<int*> iList_2{&node_1_4, &node_1_5};
+  int* aIntersection = cracking::linkedLists::intersection(iList_1, iList_2);
+
+  EXPECT_EQ(aIntersection, &node_1_4);
+}
+
+TEST(IntersectionTest, IntersectionTest_diffLength_intersectAtEnd) {
+  int node_1_0 = 9;
+  int node_1_1 = 18;
+  int node_1_2 = 7;
+  int node_1_3 = 4;
+  int node_1_4 = 5;
+  int node_1_5 = 6;
+
+  int node_2_0 = 19;
+  int node_2_1 = 18;
+
+  std::list<int*> iList_1{&node_1_0, &node_1_1, &node_1_2, &node_1_3, &node_1_4, &node_1_5};
+  std::list<int*> iList_2{&node_2_0, &node_2_1, &node_1_5};
+  int* aIntersection = cracking::linkedLists::intersection(iList_2, iList_1);
+
+  EXPECT_EQ(aIntersection, &node_1_5);
 }

@@ -40,7 +40,8 @@ set (libCrackingLinkedLists_SOURCE
     ${CMAKE_CURRENT_SOURCE_DIR}/cracking/linkedLists/deleteMiddleNode.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/cracking/linkedLists/partition.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/cracking/linkedLists/sumLists.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/cracking/linkedLists/palindrome.cpp)
+    ${CMAKE_CURRENT_SOURCE_DIR}/cracking/linkedLists/palindrome.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/cracking/linkedLists/intersection.cpp)
 set (libCrackingCAndCpp_SOURCE
     ${CMAKE_CURRENT_SOURCE_DIR}/cracking/cAndCpp/lastKlines.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/cracking/cAndCpp/reverseString.cpp
