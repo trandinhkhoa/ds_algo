@@ -49,11 +49,7 @@ void printList(){
 }
 
 ~SinglyLinkedListNode(){
-  std::cout << "destroy " << this->data << std::endl;
-  // int* a = new int(32);
-  // delete a;
   if (this->next) {
-    // free(this->next);
     delete this->next;
   }
 }

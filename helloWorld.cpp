@@ -25,6 +25,7 @@
 #include "cracking/linkedLists/sumLists.h"
 #include "cracking/linkedLists/palindrome.h"
 #include "cracking/linkedLists/intersection.h"
+#include "cracking/linkedLists/loopDetection.h"
 
 #include "cracking/cAndCpp/lastKLines.h"
 #include "cracking/cAndCpp/reverseString.h"
@@ -927,4 +928,71 @@ TEST(IntersectionTest, IntersectionTest_diffLength_intersectAtEnd) {
   int* aIntersection = cracking::linkedLists::intersection(iList_2, iList_1);
 
   EXPECT_EQ(aIntersection, &node_1_5);
+}
+
+TEST(LoopDetectionTest, LoopDetectionTest_basic_oddLoop) {
+  dataStructures::SinglyLinkedListNode aHead{0,1,2,3,4,5,6};
+  dataStructures::SinglyLinkedListNode* aEnd = &aHead;
+  int count = 0;
+  dataStructures::SinglyLinkedListNode* aExpectedLoopStart = &aHead;
+
+  while (aEnd->next != nullptr) {
+    aEnd = aEnd->next;
+    if (count < 2) {
+      aExpectedLoopStart = aExpectedLoopStart->next;
+      count++;
+    }
+  }
+  aEnd->next = aExpectedLoopStart;
+
+  dataStructures::SinglyLinkedListNode* aLoopStart = cracking::linkedLists::loopDetection(aHead);
+  EXPECT_EQ(aLoopStart, aExpectedLoopStart);
+  aEnd->next = nullptr;
+}
+
+TEST(LoopDetectionTest, LoopDetectionTest_basic_evenLoop) {
+  dataStructures::SinglyLinkedListNode aHead{0,1,2,3,4,5,6};
+  dataStructures::SinglyLinkedListNode* aEnd = &aHead;
+  int count = 0;
+  dataStructures::SinglyLinkedListNode* aExpectedLoopStart = &aHead;
+
+  while (aEnd->next != nullptr) {
+    aEnd = aEnd->next;
+    if (count < 3) {
+      aExpectedLoopStart = aExpectedLoopStart->next;
+      count++;
+    }
+  }
+  aEnd->next = aExpectedLoopStart;
+
+  dataStructures::SinglyLinkedListNode* aLoopStart = cracking::linkedLists::loopDetection(aHead);
+  EXPECT_EQ(aLoopStart, aExpectedLoopStart);
+  aEnd->next = nullptr;
+}
+
+TEST(LoopDetectionTest, LoopDetectionTest_collideAtLoopStart) {
+  dataStructures::SinglyLinkedListNode aHead{0,1,2,3,4,5,6,7,8,9,10};
+  dataStructures::SinglyLinkedListNode* aEnd = &aHead;
+  int count = 0;
+  dataStructures::SinglyLinkedListNode* aExpectedLoopStart = &aHead;
+
+  while (aEnd->next != nullptr) {
+    aEnd = aEnd->next;
+    if (count < 8) {
+      aExpectedLoopStart = aExpectedLoopStart->next;
+      count++;
+    }
+  }
+  aEnd->next = aExpectedLoopStart;
+
+  dataStructures::SinglyLinkedListNode* aLoopStart = cracking::linkedLists::loopDetection(aHead);
+  EXPECT_EQ(aLoopStart, aExpectedLoopStart);
+  aEnd->next = nullptr;
+}
+
+TEST(LoopDetectionTest, LoopDetectionTest_noLoop) {
+  dataStructures::SinglyLinkedListNode aHead{0,1,2,3,4,5,6};
+
+  dataStructures::SinglyLinkedListNode* aLoopStart = cracking::linkedLists::loopDetection(aHead);
+  EXPECT_EQ(aLoopStart, nullptr);
 }
