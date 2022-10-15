@@ -48,11 +48,16 @@ set (libCrackingCAndCpp_SOURCE
     ${CMAKE_CURRENT_SOURCE_DIR}/cracking/cAndCpp/reverseString.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/cracking/cAndCpp/copyNode.cpp)
 
+# set (libCrackingStacksAndQueues_SOURCE
+#     ${CMAKE_CURRENT_SOURCE_DIR}/cracking/stacksAndQueues/threeInOne.cpp)
+
 add_library(libCrackingArrayAndStrings SHARED ${libCrackingArrayAndStrings_SOURCE})
 
 add_library(libCrackingLinkedLists SHARED ${libCrackingLinkedLists_SOURCE})
 target_include_directories(libCrackingLinkedLists
                               PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/dataStructures")
+
+# add_library(libCrackingStacksAndQueues SHARED ${libCrackingStacksAndQueues_SOURCE})
 
 add_library(libCrackingCAndCpp SHARED ${libCrackingCAndCpp_SOURCE})
 target_link_libraries(${PROJECT_NAME} libCrackingArrayAndStrings libCrackingLinkedLists libCrackingCAndCpp)

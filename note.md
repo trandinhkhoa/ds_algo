@@ -170,6 +170,7 @@
     - The friend declaration appears in a class body and grants a function or another class access to private and protected members of the class where the friend declaration appears.
   - `container`
     - https://embeddedartistry.com/blog/2017/08/02/an-overview-of-c-stl-containers/
+    - `std::array` vs `std::vector`
 
 - `Bit` and `byte`
   - `byte`

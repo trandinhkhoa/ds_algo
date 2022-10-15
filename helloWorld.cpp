@@ -2,6 +2,7 @@
 #include <fstream>
 #include <memory>
 #include <list>
+#include <array>
 
 #include <gtest/gtest.h>
 
@@ -26,6 +27,8 @@
 #include "cracking/linkedLists/palindrome.h"
 #include "cracking/linkedLists/intersection.h"
 #include "cracking/linkedLists/loopDetection.h"
+
+#include "cracking/stacksAndQueues/threeInOne.h"
 
 #include "cracking/cAndCpp/lastKLines.h"
 #include "cracking/cAndCpp/reverseString.h"
@@ -995,4 +998,35 @@ TEST(LoopDetectionTest, LoopDetectionTest_noLoop) {
 
   dataStructures::SinglyLinkedListNode* aLoopStart = cracking::linkedLists::loopDetection(aHead);
   EXPECT_EQ(aLoopStart, nullptr);
+}
+
+TEST(ThreeInOneTest, ThreeInOneTest_basic) {
+  std::array<int, 10> aArray;
+
+  cracking::stacksAndQueues::FixedMultiStack aFixedMultiStack =
+   cracking::stacksAndQueues::threeInOneFixed(aArray);
+  aFixedMultiStack.push(0, 10);
+  aFixedMultiStack.push(0, 11);
+  aFixedMultiStack.push(0, 12);
+  EXPECT_THROW(aFixedMultiStack.push(0, 13), std::runtime_error);
+
+  aFixedMultiStack.push(1, 13);
+  aFixedMultiStack.push(1, 14);
+  aFixedMultiStack.push(1, 15);
+  EXPECT_THROW(aFixedMultiStack.push(0, 16), std::runtime_error);
+
+  EXPECT_THROW(aFixedMultiStack.pop(2), std::runtime_error);
+  aFixedMultiStack.push(2, 16);
+  aFixedMultiStack.push(2, 16);
+  aFixedMultiStack.pop(2);
+  aFixedMultiStack.push(2, 17);
+  aFixedMultiStack.push(2, 18);
+  aFixedMultiStack.push(2, 19);
+  EXPECT_THROW(aFixedMultiStack.push(0, 19), std::runtime_error);
+
+  EXPECT_EQ(aFixedMultiStack.pop(0), 12);
+  EXPECT_EQ(aFixedMultiStack.pop(1), 15);
+  EXPECT_EQ(aFixedMultiStack.pop(2), 19);
+
+  aFixedMultiStack.printAll();
 }
