@@ -1000,11 +1000,11 @@ TEST(LoopDetectionTest, LoopDetectionTest_noLoop) {
   EXPECT_EQ(aLoopStart, nullptr);
 }
 
-TEST(ThreeInOneTest, ThreeInOneTest_basic) {
-  std::array<int, 10> aArray;
+TEST(ThreeInOneTest, ThreeInOneTest_fixed) {
+  int aMaxSize = 10;
 
   cracking::stacksAndQueues::FixedMultiStack aFixedMultiStack =
-   cracking::stacksAndQueues::threeInOneFixed(aArray);
+   cracking::stacksAndQueues::threeInOneFixed(aMaxSize);
   aFixedMultiStack.push(0, 10);
   aFixedMultiStack.push(0, 11);
   aFixedMultiStack.push(0, 12);
@@ -1013,7 +1013,7 @@ TEST(ThreeInOneTest, ThreeInOneTest_basic) {
   aFixedMultiStack.push(1, 13);
   aFixedMultiStack.push(1, 14);
   aFixedMultiStack.push(1, 15);
-  EXPECT_THROW(aFixedMultiStack.push(0, 16), std::runtime_error);
+  EXPECT_THROW(aFixedMultiStack.push(1, 16), std::runtime_error);
 
   EXPECT_THROW(aFixedMultiStack.pop(2), std::runtime_error);
   aFixedMultiStack.push(2, 16);
@@ -1024,9 +1024,120 @@ TEST(ThreeInOneTest, ThreeInOneTest_basic) {
   aFixedMultiStack.push(2, 19);
   EXPECT_THROW(aFixedMultiStack.push(0, 19), std::runtime_error);
 
+  EXPECT_EQ(aFixedMultiStack.aArray.size(), aMaxSize);
+
   EXPECT_EQ(aFixedMultiStack.pop(0), 12);
   EXPECT_EQ(aFixedMultiStack.pop(1), 15);
   EXPECT_EQ(aFixedMultiStack.pop(2), 19);
+}
 
-  aFixedMultiStack.printAll();
+TEST(ThreeInOneTest, ThreeInOneTest_1) {
+  int aMaxSize = 10;
+
+  cracking::stacksAndQueues::MultiStack aMultiStack = cracking::stacksAndQueues::threeInOne(aMaxSize);
+  aMultiStack.push(0, 10);
+  aMultiStack.push(0, 11);
+  aMultiStack.push(0, 12);
+  aMultiStack.push(0, 13);
+
+  aMultiStack.push(1, 14);
+  aMultiStack.push(1, 15);
+  aMultiStack.push(1, 16);
+  aMultiStack.push(1, 17);
+
+  EXPECT_THROW(aMultiStack.pop(2), std::runtime_error);
+  aMultiStack.push(2, 18);
+  aMultiStack.push(2, 19);
+  aMultiStack.pop(2);
+  aMultiStack.push(2, 20);
+  EXPECT_THROW(aMultiStack.push(0, 21), std::runtime_error);
+
+  EXPECT_EQ(aMultiStack.aArray.size(), aMaxSize);
+
+  std::vector<int> aExpectedArray{10, 11, 12, 13, 14, 15, 16, 17, 18, 20};
+  EXPECT_TRUE(helper::compareArray(aMultiStack.aArray, aExpectedArray));
+
+  EXPECT_EQ(aMultiStack.pop(0), 13);
+  EXPECT_EQ(aMultiStack.pop(1), 17);
+  EXPECT_EQ(aMultiStack.pop(2), 20);
+}
+
+TEST(ThreeInOneTest, ThreeInOneTest_2) {
+  int aMaxSize = 10;
+
+  cracking::stacksAndQueues::MultiStack aMultiStack = cracking::stacksAndQueues::threeInOne(aMaxSize);
+  aMultiStack.push(2, 10);
+  aMultiStack.push(2, 11);
+  aMultiStack.push(2, 12);
+  aMultiStack.push(2, 13);
+  aMultiStack.push(2, 14);
+  aMultiStack.push(2, 15);
+  aMultiStack.push(2, 16);
+  aMultiStack.push(2, 17);
+  aMultiStack.push(2, 18);
+  aMultiStack.push(2, 19);
+
+  EXPECT_THROW(aMultiStack.push(0, 19), std::runtime_error);
+  EXPECT_THROW(aMultiStack.push(1, 19), std::runtime_error);
+  EXPECT_THROW(aMultiStack.push(2, 19), std::runtime_error);
+
+  EXPECT_EQ(aMultiStack.aArray.size(), aMaxSize);
+
+  std::vector<int> aExpectedArray{14, 15, 16, 17, 18, 19, 10, 11, 12, 13};
+  EXPECT_TRUE(helper::compareArray(aMultiStack.aArray, aExpectedArray));
+  EXPECT_EQ(aMultiStack.pop(2), 19);
+}
+
+TEST(ThreeInOneTest, ThreeInOneTest_3) {
+  int aMaxSize = 10;
+
+  cracking::stacksAndQueues::MultiStack aMultiStack = cracking::stacksAndQueues::threeInOne(aMaxSize);
+  aMultiStack.push(2, 10);
+  aMultiStack.push(2, 11);
+  aMultiStack.push(2, 12);
+
+  aMultiStack.push(0, 13);
+
+  aMultiStack.push(2, 14);
+  aMultiStack.push(2, 15);
+
+  std::vector<int> aExpectedArray{13, -1, -1, -1, -1, 10, 11, 12, 14, 15};
+  EXPECT_TRUE(helper::compareArray(aMultiStack.aArray, aExpectedArray));
+
+  EXPECT_EQ(aMultiStack.pop(2), 15);
+  EXPECT_EQ(aMultiStack.pop(0), 13);
+  EXPECT_THROW(aMultiStack.pop(1), std::runtime_error);
+  EXPECT_EQ(aMultiStack.pop(2), 14);
+
+}
+
+TEST(ThreeInOneTest, ThreeInOneTest_4) {
+  int aMaxSize = 10;
+
+  cracking::stacksAndQueues::MultiStack aMultiStack = cracking::stacksAndQueues::threeInOne(aMaxSize);
+  aMultiStack.push(2, 10);
+  aMultiStack.push(2, 11);
+  aMultiStack.push(2, 12);
+  aMultiStack.push(2, 13);
+
+  aMultiStack.push(1, 14);
+  aMultiStack.push(1, 15);
+  aMultiStack.push(1, 16);
+  aMultiStack.push(1, 17);
+
+  aMultiStack.push(0, 18);
+  aMultiStack.push(0, 19);
+  aMultiStack.pop(0);
+
+  aMultiStack.push(2, 20);
+
+  EXPECT_EQ(aMultiStack.aArray.size(), aMaxSize);
+
+  std::vector<int> aExpectedArray{20, 18, 14, 15, 16, 17, 10, 11, 12, 13};
+  EXPECT_TRUE(helper::compareArray(aMultiStack.aArray, aExpectedArray));
+
+  EXPECT_EQ(aMultiStack.pop(2), 20);
+  EXPECT_EQ(aMultiStack.pop(0), 18);
+  EXPECT_THROW(aMultiStack.pop(0), std::runtime_error);
+  EXPECT_EQ(aMultiStack.pop(1), 17);
 }
