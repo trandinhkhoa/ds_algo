@@ -29,6 +29,7 @@
 #include "cracking/linkedLists/loopDetection.h"
 
 #include "cracking/stacksAndQueues/threeInOne.h"
+#include "cracking/stacksAndQueues/stackMin.h"
 
 #include "cracking/cAndCpp/lastKLines.h"
 #include "cracking/cAndCpp/reverseString.h"
@@ -1140,4 +1141,18 @@ TEST(ThreeInOneTest, ThreeInOneTest_4) {
   EXPECT_EQ(aMultiStack.pop(0), 18);
   EXPECT_THROW(aMultiStack.pop(0), std::runtime_error);
   EXPECT_EQ(aMultiStack.pop(1), 17);
+}
+
+TEST(StackMinTest, StackMinTest_basic) {
+  cracking::stacksAndQueues::StackWithMin aStackWithMin;
+  aStackWithMin.push(2);
+  aStackWithMin.push(3);
+  aStackWithMin.push(4);
+  aStackWithMin.push(5);
+  aStackWithMin.push(1);
+
+  EXPECT_EQ(aStackWithMin.size(), 5);
+  EXPECT_EQ(aStackWithMin.min(), 1);
+  EXPECT_EQ(aStackWithMin.pop(), 1);
+  EXPECT_EQ(aStackWithMin.min(), 2);
 }
