@@ -44,7 +44,8 @@ set (libCrackingLinkedLists_SOURCE
     ${CMAKE_CURRENT_SOURCE_DIR}/cracking/linkedLists/intersection.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/cracking/linkedLists/loopDetection.cpp)
 set (libCrackingStacksAndQueues_SOURCE
-    ${CMAKE_CURRENT_SOURCE_DIR}/cracking/stacksAndQueues/stackMin.cpp)
+    ${CMAKE_CURRENT_SOURCE_DIR}/cracking/stacksAndQueues/stackMin.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/cracking/stacksAndQueues/stackOfPlates.cpp)
 set (libCrackingCAndCpp_SOURCE
     ${CMAKE_CURRENT_SOURCE_DIR}/cracking/cAndCpp/lastKlines.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/cracking/cAndCpp/reverseString.cpp

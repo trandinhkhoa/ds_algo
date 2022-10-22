@@ -30,6 +30,7 @@
 
 #include "cracking/stacksAndQueues/threeInOne.h"
 #include "cracking/stacksAndQueues/stackMin.h"
+#include "cracking/stacksAndQueues/stackOfPlates.h"
 
 #include "cracking/cAndCpp/lastKLines.h"
 #include "cracking/cAndCpp/reverseString.h"
@@ -1155,4 +1156,80 @@ TEST(StackMinTest, StackMinTest_basic) {
   EXPECT_EQ(aStackWithMin.min(), 1);
   EXPECT_EQ(aStackWithMin.pop(), 1);
   EXPECT_EQ(aStackWithMin.min(), 2);
+}
+
+TEST(StackOfPlatesTest, StackOfPlatesTest_basic) {
+  cracking::stacksAndQueues::StackOfPlates aStackOfPlates(3);
+  EXPECT_THROW(aStackOfPlates.pop(), std::runtime_error);
+  aStackOfPlates.push(1);
+  EXPECT_EQ(aStackOfPlates.pop(), 1);
+
+  aStackOfPlates.push(0);
+  aStackOfPlates.push(1);
+  aStackOfPlates.push(2);
+  // [0,1,2]
+
+  EXPECT_EQ(aStackOfPlates.pop(), 2);
+  aStackOfPlates.push(2);
+  // [0,1,2]
+
+  aStackOfPlates.push(3);
+  EXPECT_EQ(aStackOfPlates.pop(), 3);
+  EXPECT_EQ(aStackOfPlates.pop(), 2);
+  aStackOfPlates.push(2);
+  // [0,1,2]
+
+  aStackOfPlates.push(3);
+  aStackOfPlates.push(4);
+  aStackOfPlates.push(5);
+  // [0,1,2], [3,4,5]
+
+  aStackOfPlates.push(6);
+  EXPECT_EQ(aStackOfPlates.pop(), 6);
+  aStackOfPlates.push(6);
+  aStackOfPlates.push(7);
+  EXPECT_EQ(aStackOfPlates.pop(), 7);
+  // [0,1,2], [3,4,5], [6]
+
+  EXPECT_EQ(aStackOfPlates.popAt(1), 5);
+  aStackOfPlates.push(5);
+  EXPECT_EQ(aStackOfPlates.pop(), 5);
+  // [0,1,2], [3,4], [6]
+
+  EXPECT_EQ(aStackOfPlates.popAt(0), 2);
+  EXPECT_EQ(aStackOfPlates.popAt(0), 1);
+  // [0], [3,4], [6]
+
+  aStackOfPlates.push(1);
+  aStackOfPlates.push(2);
+  aStackOfPlates.push(5);
+  EXPECT_EQ(aStackOfPlates.pop(), 5);
+  EXPECT_EQ(aStackOfPlates.pop(), 2);
+  EXPECT_EQ(aStackOfPlates.pop(), 1);
+  EXPECT_EQ(aStackOfPlates.pop(), 6);
+  EXPECT_EQ(aStackOfPlates.pop(), 4);
+  EXPECT_EQ(aStackOfPlates.pop(), 3);
+  // [0]
+
+  // // TODO: remove unused stacks
+  aStackOfPlates.push(1);
+  aStackOfPlates.push(2);
+  // EXPECT_EQ(aStackOfPlates.popAt(0), 2);
+  aStackOfPlates.popAt(0);
+  aStackOfPlates.push(2);
+  // [2] [1,2] []
+
+  aStackOfPlates.push(3);
+  aStackOfPlates.push(4);
+  aStackOfPlates.push(5);
+  aStackOfPlates.push(6);
+
+  EXPECT_EQ(aStackOfPlates.pop(), 6);
+  EXPECT_EQ(aStackOfPlates.pop(), 5);
+  EXPECT_EQ(aStackOfPlates.pop(), 4);
+  EXPECT_EQ(aStackOfPlates.pop(), 3);
+  EXPECT_EQ(aStackOfPlates.pop(), 2);
+  EXPECT_EQ(aStackOfPlates.pop(), 2);
+  EXPECT_EQ(aStackOfPlates.pop(), 1);
+  EXPECT_THROW(aStackOfPlates.pop(), std::runtime_error);
 }

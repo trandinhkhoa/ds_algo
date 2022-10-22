@@ -171,6 +171,7 @@
   - `container`
     - https://embeddedartistry.com/blog/2017/08/02/an-overview-of-c-stl-containers/
     - `std::array` vs `std::vector`
+  - C++ style guide https://google.github.io/styleguide/cppguide.html
 
 - `Bit` and `byte`
   - `byte`
