@@ -1,104 +1,107 @@
 #include "stackOfPlates.h"
 #include <iostream>
 
-// O(1) for all.
-// Limitation:
-  // too complicated to support popAt O(1). error prone
-  //  The value of popAt is implementation specific
-  // another simpler implementation is to shift the plate backward everytime popAt finished => popAt O(n) time with n is the capacity of each stack.
-  // pop + push still O(1)
+// Lession learned: if the logic seems to be too convoluted (e.g. too many nested if), you probably are on the wrong track.
+
+// Time Complexity:
+  // - push/pop O(1),
+  // - popAt() O(K) K=N/C is the  number of stacks. N = number of plates, C = capacity => worst still O(N)
 namespace cracking {
 namespace stacksAndQueues {
 
-StackOfPlates::PushTrackerItem::PushTrackerItem(int iStackId, int iCount){
-  this->count = iCount;
-  this->stackId = iStackId;
-}
-
 StackOfPlates::StackOfPlates(size_t iSingleStackCapacity) {
-  singleStackCapacity = iSingleStackCapacity;
-  std::vector<int> aStack;
-  arrayOfStacks.push_back(aStack);
-  popTracker.push_back(0);
-}
-
-void StackOfPlates::pushHelper(int iNewPlate, int iStackId) {
-  arrayOfStacks.at(iStackId).push_back(iNewPlate);
-  if (pushTracker.size() != 0 && pushTracker.back().stackId == iStackId) {
-    pushTracker.back().count++;
-  } else {
-    PushTrackerItem aPushTrackerItem(iStackId, 1);
-    pushTracker.push_back(aPushTrackerItem);
+  if (iSingleStackCapacity == 0) {
+    throw std::runtime_error("Capacity of a single stack cannot be 0");
   }
+  singleStackCapacity = iSingleStackCapacity;
+  listOfStacks.emplace_back();
+  stackPointer = listOfStacks.begin();
 }
 
 void StackOfPlates::push(int iNewPlate) {
-  int idToPush = popTracker.back();
-  // use at to have exception instead of seg fault in case of out of bound
-  if (arrayOfStacks.at(idToPush).size() == singleStackCapacity) {
-    popTracker.pop_back();
-    // pop tracker empty -> there is no pop recently => all existing stack filled
-    if (popTracker.empty()) {
-      int idOfNewStack = arrayOfStacks.size();
-
-      // create new stack;
-      std::vector<int> aStack;
-      arrayOfStacks.push_back(aStack);
-
-      popTracker.push_back(idOfNewStack);
-      idToPush = idOfNewStack;
-    } else {
-      idToPush = popTracker.back();
-      // popTracker.pop_back();
-    }
+  if (stackPointer->size() == singleStackCapacity) {
+    listOfStacks.emplace_back();
+    stackPointer++;
   }
-  pushHelper(iNewPlate, idToPush);
+  stackPointer->push_back(iNewPlate);
+}
+
+void StackOfPlates::leftShift(std::list<std::list<int>>::iterator iCurrentStack) {
+  auto end = listOfStacks.end();
+  end--;
+  if (iCurrentStack == end) {
+    if (iCurrentStack->empty()) {
+      listOfStacks.pop_back();
+      stackPointer = listOfStacks.end();
+      stackPointer--;
+    }
+    return;
+  }
+
+  auto nextStack = iCurrentStack;
+  nextStack++;
+
+  std::vector<int> buffer;
+
+  iCurrentStack->push_back(nextStack->front());
+  nextStack->pop_front();
+
+  leftShift(++iCurrentStack);
 }
 
 int StackOfPlates::popAt(int iStackId) {
-  if (arrayOfStacks.at(iStackId).empty()) {
-    std::string errorMsg("Stack Empty. Id = " + std::to_string(iStackId));
-    throw std::runtime_error(errorMsg);
-  } else {
-    int returnValue;
-    // disregard the pushTracker. pushTracker might not reflect the real amount of plates because of this
-    // this is why it is still necessary to check for fullness/emptiness of the stack when pushed/popped
-    returnValue = arrayOfStacks.at(iStackId).back();
-    arrayOfStacks.at(iStackId).pop_back();
-    if (iStackId != popTracker.back()) {
-      popTracker.push_back(iStackId);
-    }
-    return returnValue;
+  std::string errorMsg = "Stack Empty. Stack Id = " + std::to_string(iStackId);
+
+  if (iStackId >= listOfStacks.size()) {
+    throw std::runtime_error("Invalid StackId");
   }
+
+  auto iter = listOfStacks.begin();
+  for (int i = 0; i < iStackId; i++) {
+    iter++;
+  }
+
+  if (iter->empty()) {
+    throw std::runtime_error(errorMsg);
+  }
+
+  int returnValue = iter->back();
+  iter->pop_back();
+
+  if (iter->empty()) {
+    if (iStackId == listOfStacks.size() - 1) {
+      // pop at the end => same as pop()
+      if (listOfStacks.size() > 1) {
+        stackPointer--;
+      listOfStacks.pop_back();
+      }
+    } else {
+      if (listOfStacks.size() > 1) {
+        listOfStacks.erase(iter);
+      }
+    }
+  } else if (iStackId != listOfStacks.size() - 1) {
+    leftShift(iter);
+  }
+  return returnValue;
 }
 
 int StackOfPlates::pop() {
-  if (pushTracker.size() == 0) {
-    std::string errorMsg("Stack Empty");
-    throw std::runtime_error(errorMsg);
-  }
-  int returnValue;
+  std::string errorMsg = "Stack Empty";
 
-  // should check if stack is empty, if empty pop, until non empty
-  int stackId = pushTracker.back().stackId;
-  if (!arrayOfStacks.at(stackId).empty())
-  {
-    returnValue = arrayOfStacks.at(stackId).back();
-    arrayOfStacks.at(stackId).pop_back();
-  } else {
-    std::string errorMsg("Stack Empty");
+  if (stackPointer->empty()) {
     throw std::runtime_error(errorMsg);
   }
 
-  pushTracker.back().count--;
-  if (pushTracker.back().count == 0) {
-    pushTracker.pop_back();
-  }
+  int returnValue = stackPointer->back();
+  stackPointer->pop_back();
 
-  if (stackId != popTracker.back()) {
-    popTracker.push_back(stackId);
+  if (stackPointer->empty()) {
+    if (listOfStacks.size() > 1) {
+      stackPointer--;
+      listOfStacks.pop_back();
+    }
   }
-
   return returnValue;
 }
 

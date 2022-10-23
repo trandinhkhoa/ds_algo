@@ -1,32 +1,25 @@
 #include <vector>
+#include <list>
 
 namespace cracking {
 namespace stacksAndQueues {
 
 class StackOfPlates {
-  class PushTrackerItem {
-  public:
-    int stackId;
-    int count;
-    PushTrackerItem(int iStackId, int iCount);
-  };
-
-  std::vector<std::vector<int>> arrayOfStacks;
-  std::vector<PushTrackerItem> pushTracker;
-  std::vector<int> popTracker;
   size_t singleStackCapacity;
-
+  // list is fine https://en.cppreference.com/w/cpp/container/stack
+  std::list<std::list<int>>::iterator stackPointer;
+  void leftShift(std::list<std::list<int>>::iterator iStackId);
 public:
   StackOfPlates(size_t iSingleStackCapacity);
   int pop();
 
-  void pushHelper(int iNewPlate, int StackId);
-
   void push(int iNewPlate);
 
-  void pushAt(int iNewPlate, int stackId);
-  int popAt(int stackId);
+  int popAt(int iStackId);
+
+  std::list<std::list<int>> listOfStacks;
 };
+
 
 }
 }

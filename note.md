@@ -227,3 +227,10 @@
       - https://www.reddit.com/r/learnprogramming/comments/77qajp/why_is_it_better_to_wrap_the_node_class_with_a/
       - https://stackoverflow.com/questions/65486760/intrinsic-benefit-of-using-a-linkedlist-class-to-point-to-head-node-vs-just-usi
     - https://codereview.stackexchange.com/questions/190590/singly-linked-list-implementation-c
+  - Stack vs Deque vs LinkedList: what should I for  stack ? queue/dequeu/linkedlist ?
+    - C++
+      - https://en.cppreference.com/w/cpp/container/stack
+      - https://stackoverflow.com/questions/2247982/c-deque-vs-queue-vs-stack
+      - https://stackoverflow.com/questions/1436020/whats-the-difference-between-deque-and-list-stl-containers#:~:text=std%3A%3Alist%20is%20basically,performance%20characteristics%20than%20a%20list.&text=Save%20this%20answer.,-Show%20activity%20on
+      - https://stackoverflow.com/questions/25922201/linkedlist-vs-stack
+      - https://stackoverflow.com/questions/238008/relative-performance-of-stdvector-vs-stdlist-vs-stdslist
