@@ -32,6 +32,7 @@
 #include "cracking/stacksAndQueues/stackMin.h"
 #include "cracking/stacksAndQueues/stackOfPlates.h"
 #include "cracking/stacksAndQueues/queueViaStacks.h"
+#include "cracking/stacksAndQueues/sortStack.h"
 
 #include "cracking/cAndCpp/lastKLines.h"
 #include "cracking/cAndCpp/reverseString.h"
@@ -116,6 +117,16 @@ bool isArraySortedAscending(std::vector<int>& array) {
   bool isSorted = true;
   for (int i = 0; i < array.size() - 1; i++) {
     if (array[i] > array[i+1]) {
+      return false;
+    }
+  }
+  return isSorted;
+}
+
+bool isArraySortedDescending(std::vector<int>& array) {
+  bool isSorted = true;
+  for (int i = 0; i < array.size() - 1; i++) {
+    if (array[i] < array[i+1]) {
       return false;
     }
   }
@@ -1320,4 +1331,42 @@ TEST(QueueViaStackTest, QueueViaStackTest_basic) {
   EXPECT_EQ(myQueue.remove(), 5);
 
   EXPECT_TRUE(myQueue.empty());
+}
+
+TEST(SortStackTest, SortStackTest_basic) {
+  std::vector<int> aStack{2, 6, 4, 8, 4, 5};
+  cracking::stacksAndQueues::sortStack(aStack);
+
+  std::vector<int> aExpectedVector{8, 6, 5, 4, 4, 2};
+  EXPECT_TRUE(helper::compareArray(aStack, aExpectedVector));
+}
+
+TEST(SortStackTest, SortStackTest_allEqual) {
+  std::vector<int> aStack{2, 2, 2, 2, 2, 2};
+  cracking::stacksAndQueues::sortStack(aStack);
+
+  std::vector<int> aExpectedVector{2, 2, 2, 2, 2, 2};
+  EXPECT_TRUE(helper::compareArray(aStack, aExpectedVector));
+}
+
+TEST(SortStackTest, SortStackTest_alreadySorted) {
+  std::vector<int> aStack{8, 6, 5, 4, 4, 2};
+  cracking::stacksAndQueues::sortStack(aStack);
+
+  std::vector<int> aExpectedVector{8, 6, 5, 4, 4, 2};
+  EXPECT_TRUE(helper::compareArray(aStack, aExpectedVector));
+}
+
+TEST(SortStackTest, SortStackTest_reversed) {
+  std::vector<int> aStack{2, 4, 4, 5, 6, 8};
+  cracking::stacksAndQueues::sortStack(aStack);
+
+  std::vector<int> aExpectedVector{8, 6, 5, 4, 4, 2};
+  EXPECT_TRUE(helper::compareArray(aStack, aExpectedVector));
+}
+
+TEST(SortStackTest, SortStackTest_long) {
+  std::vector<int> aStack(helper::generateArray(100));
+  cracking::stacksAndQueues::sortStack(aStack);
+  EXPECT_TRUE(helper::isArraySortedDescending(aStack));
 }
