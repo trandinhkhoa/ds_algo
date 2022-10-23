@@ -31,6 +31,7 @@
 #include "cracking/stacksAndQueues/threeInOne.h"
 #include "cracking/stacksAndQueues/stackMin.h"
 #include "cracking/stacksAndQueues/stackOfPlates.h"
+#include "cracking/stacksAndQueues/queueViaStacks.h"
 
 #include "cracking/cAndCpp/lastKLines.h"
 #include "cracking/cAndCpp/reverseString.h"
@@ -1293,4 +1294,30 @@ TEST(StackOfPlatesTest, StackOfPlatesTest_waste_2) {
   aStackOfPlates.popAt(1);
 
   EXPECT_EQ(aStackOfPlates.listOfStacks.size(), 2);
+}
+
+TEST(QueueViaStackTest, QueueViaStackTest_basic) {
+  cracking::stacksAndQueues::QueueViaStacks myQueue;
+  EXPECT_THROW(myQueue.peek(), std::runtime_error);
+  EXPECT_THROW(myQueue.remove(), std::runtime_error);
+
+  myQueue.add(0);
+  myQueue.add(1);
+  myQueue.add(2);
+
+  EXPECT_EQ(myQueue.peek(), 0);
+  EXPECT_EQ(myQueue.remove(), 0);
+
+  myQueue.add(3);
+  myQueue.add(4);
+  myQueue.add(5);
+
+  EXPECT_EQ(myQueue.peek(), 1);
+  EXPECT_EQ(myQueue.remove(), 1);
+  EXPECT_EQ(myQueue.remove(), 2);
+  EXPECT_EQ(myQueue.remove(), 3);
+  EXPECT_EQ(myQueue.remove(), 4);
+  EXPECT_EQ(myQueue.remove(), 5);
+
+  EXPECT_TRUE(myQueue.empty());
 }
