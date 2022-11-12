@@ -2,8 +2,9 @@
 
 // space O(N)
 // time O(2*N*N + N) = O(N^2)
+// downside: always O(N^2) even in best case
 // TODO: quickSort + mergeSort using more buffers
-// TODO: time can be O(N*N +N) not (2N^2+N)
+// NOTE:  another solutioon https://stackoverflow.com/questions/34384823/time-complexity-for-a-sorting-technique-for-stacks
 namespace cracking {
 namespace stacksAndQueues {
 

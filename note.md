@@ -234,3 +234,16 @@
       - https://stackoverflow.com/questions/1436020/whats-the-difference-between-deque-and-list-stl-containers#:~:text=std%3A%3Alist%20is%20basically,performance%20characteristics%20than%20a%20list.&text=Save%20this%20answer.,-Show%20activity%20on
       - https://stackoverflow.com/questions/25922201/linkedlist-vs-stack
       - https://stackoverflow.com/questions/238008/relative-performance-of-stdvector-vs-stdlist-vs-stdslist
+
+- Design Pattern:
+  - Builder ?
+    - example ?
+    Simplify the constructions of objects:
+    ```
+      cracking::treesAndGraphs::Graph aGraph;
+      aGraph.insert({"0", {"1", "4", "5"}});
+    ```
+    the construction of the structure inside is not that simple, requiring the construction of objects of custom type `Node` instead of using `std::string` directly :
+    ```
+    std::unordered_map<std::string, std::vector<Node>> _graph;
+    ```

@@ -48,6 +48,8 @@ set (libCrackingStacksAndQueues_SOURCE
     ${CMAKE_CURRENT_SOURCE_DIR}/cracking/stacksAndQueues/stackOfPlates.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/cracking/stacksAndQueues/queueViaStacks.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/cracking/stacksAndQueues/sortStack.cpp)
+set (libCrackingTreesAndGraphs_SOURCE
+    ${CMAKE_CURRENT_SOURCE_DIR}/cracking/treesAndGraphs/routeBetweenNodes.cpp)
 set (libCrackingCAndCpp_SOURCE
     ${CMAKE_CURRENT_SOURCE_DIR}/cracking/cAndCpp/lastKlines.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/cracking/cAndCpp/reverseString.cpp
@@ -61,8 +63,10 @@ target_include_directories(libCrackingLinkedLists
 
 add_library(libCrackingStacksAndQueues SHARED ${libCrackingStacksAndQueues_SOURCE})
 
+add_library(libCrackingTreesAndGraphs SHARED ${libCrackingTreesAndGraphs_SOURCE})
+
 add_library(libCrackingCAndCpp SHARED ${libCrackingCAndCpp_SOURCE})
-target_link_libraries(${PROJECT_NAME} libCrackingArrayAndStrings libCrackingLinkedLists libCrackingCAndCpp libCrackingStacksAndQueues)
+target_link_libraries(${PROJECT_NAME} libCrackingArrayAndStrings libCrackingLinkedLists libCrackingCAndCpp libCrackingStacksAndQueues libCrackingTreesAndGraphs)
 
 ###################
 # TEST

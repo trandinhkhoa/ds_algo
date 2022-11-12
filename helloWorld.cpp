@@ -34,6 +34,8 @@
 #include "cracking/stacksAndQueues/queueViaStacks.h"
 #include "cracking/stacksAndQueues/sortStack.h"
 
+#include "cracking/treesAndGraphs/routeBetweenNodes.h"
+
 #include "cracking/cAndCpp/lastKLines.h"
 #include "cracking/cAndCpp/reverseString.h"
 #include "cracking/cAndCpp/copyNode.h"
@@ -1369,4 +1371,71 @@ TEST(SortStackTest, SortStackTest_long) {
   std::vector<int> aStack(helper::generateArray(100));
   cracking::stacksAndQueues::sortStack(aStack);
   EXPECT_TRUE(helper::isArraySortedDescending(aStack));
+}
+
+TEST(RouteBetweenNodesTest, RouteBetweenNodesTest_basic) {
+  cracking::treesAndGraphs::Graph aGraph;
+  aGraph.insert({"0", {"1", "4", "5"}});
+  aGraph.insert({"1", {"3", "4"}});
+  aGraph.insert({"2", {"1"}});
+  aGraph.insert({"3", {"2", "4"}});
+  aGraph.insert({"4", {}});
+  aGraph.insert({"5", {}});
+
+  std::string aNodeA = "0";
+  std::string aNodeB = "2";
+
+  std::vector<std::string> aPath = cracking::treesAndGraphs::routeBetweenNodes(aGraph, aNodeA, aNodeB);
+  std::vector<std::string> aExpectedOutput{"2", "3", "1", "0"};
+  helper::compareArray(aPath, aExpectedOutput);
+}
+
+TEST(RouteBetweenNodesTest, RouteBetweenNodesTest_firstDirectChild) {
+  cracking::treesAndGraphs::Graph aGraph;
+  aGraph.insert({"0", {"1", "4", "5"}});
+  aGraph.insert({"1", {"3", "4"}});
+  aGraph.insert({"2", {"1"}});
+  aGraph.insert({"3", {"2", "4"}});
+  aGraph.insert({"4", {}});
+  aGraph.insert({"5", {}});
+
+  std::string aNodeA = "0";
+  std::string aNodeB = "1";
+
+  std::vector<std::string> aPath = cracking::treesAndGraphs::routeBetweenNodes(aGraph, aNodeA, aNodeB);
+  std::vector<std::string> aExpectedOutput{"1", "0"};
+  helper::compareArray(aPath, aExpectedOutput);
+}
+
+TEST(RouteBetweenNodesTest, RouteBetweenNodesTest_directChildNotFirst) {
+  cracking::treesAndGraphs::Graph aGraph;
+  aGraph.insert({"0", {"1", "4", "5"}});
+  aGraph.insert({"1", {"3", "4"}});
+  aGraph.insert({"2", {"1"}});
+  aGraph.insert({"3", {"2", "4"}});
+  aGraph.insert({"4", {}});
+  aGraph.insert({"5", {}});
+
+  std::string aNodeA = "0";
+  std::string aNodeB = "5";
+
+  std::vector<std::string> aPath = cracking::treesAndGraphs::routeBetweenNodes(aGraph, aNodeA, aNodeB);
+  std::vector<std::string> aExpectedOutput{"5", "0"};
+  helper::compareArray(aPath, aExpectedOutput);
+}
+
+TEST(RouteBetweenNodesTest, RouteBetweenNodesTest_notFound) {
+  cracking::treesAndGraphs::Graph aGraph;
+  aGraph.insert({"0", {"1", "4", "5"}});
+  aGraph.insert({"1", {"3", "4"}});
+  aGraph.insert({"2", {"1"}});
+  aGraph.insert({"3", {"2", "4"}});
+  aGraph.insert({"4", {}});
+  aGraph.insert({"5", {}});
+
+  std::string aNodeA = "1";
+  std::string aNodeB = "5";
+
+  std::vector<std::string> aPath = cracking::treesAndGraphs::routeBetweenNodes(aGraph, aNodeA, aNodeB);
+  EXPECT_TRUE(aPath.empty());
 }
