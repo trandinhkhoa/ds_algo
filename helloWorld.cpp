@@ -1385,9 +1385,13 @@ TEST(RouteBetweenNodesTest, RouteBetweenNodesTest_basic) {
   std::string aNodeA = "0";
   std::string aNodeB = "2";
 
-  std::vector<std::string> aPath = cracking::treesAndGraphs::routeBetweenNodes(aGraph, aNodeA, aNodeB);
   std::vector<std::string> aExpectedOutput{"2", "3", "1", "0"};
-  helper::compareArray(aPath, aExpectedOutput);
+  std::vector<std::string> aPathDepthFirstSearch = cracking::treesAndGraphs::routeBetweenNodes(aGraph, aNodeA, aNodeB,
+                                                      cracking::treesAndGraphs::traversalStrategy::depthFirst);
+  std::vector<std::string> aPathBreadthFirstSearch = cracking::treesAndGraphs::routeBetweenNodes(aGraph, aNodeA, aNodeB,
+                                                      cracking::treesAndGraphs::traversalStrategy::breadthFirst);
+  EXPECT_TRUE(helper::compareArray(aPathDepthFirstSearch, aExpectedOutput));
+  EXPECT_TRUE(helper::compareArray(aPathBreadthFirstSearch, aExpectedOutput));
 }
 
 TEST(RouteBetweenNodesTest, RouteBetweenNodesTest_firstDirectChild) {
@@ -1402,9 +1406,13 @@ TEST(RouteBetweenNodesTest, RouteBetweenNodesTest_firstDirectChild) {
   std::string aNodeA = "0";
   std::string aNodeB = "1";
 
-  std::vector<std::string> aPath = cracking::treesAndGraphs::routeBetweenNodes(aGraph, aNodeA, aNodeB);
   std::vector<std::string> aExpectedOutput{"1", "0"};
-  helper::compareArray(aPath, aExpectedOutput);
+  std::vector<std::string> aPathDepthFirstSearch = cracking::treesAndGraphs::routeBetweenNodes(aGraph, aNodeA, aNodeB,
+                                                      cracking::treesAndGraphs::traversalStrategy::depthFirst);
+  std::vector<std::string> aPathBreadthFirstSearch = cracking::treesAndGraphs::routeBetweenNodes(aGraph, aNodeA, aNodeB,
+                                                      cracking::treesAndGraphs::traversalStrategy::breadthFirst);
+  EXPECT_TRUE(helper::compareArray(aPathDepthFirstSearch, aExpectedOutput));
+  EXPECT_TRUE(helper::compareArray(aPathBreadthFirstSearch, aExpectedOutput));
 }
 
 TEST(RouteBetweenNodesTest, RouteBetweenNodesTest_directChildNotFirst) {
@@ -1419,9 +1427,13 @@ TEST(RouteBetweenNodesTest, RouteBetweenNodesTest_directChildNotFirst) {
   std::string aNodeA = "0";
   std::string aNodeB = "5";
 
-  std::vector<std::string> aPath = cracking::treesAndGraphs::routeBetweenNodes(aGraph, aNodeA, aNodeB);
   std::vector<std::string> aExpectedOutput{"5", "0"};
-  helper::compareArray(aPath, aExpectedOutput);
+  std::vector<std::string> aPathDepthFirstSearch = cracking::treesAndGraphs::routeBetweenNodes(aGraph, aNodeA, aNodeB,
+                                                      cracking::treesAndGraphs::traversalStrategy::depthFirst);
+  std::vector<std::string> aPathBreadthFirstSearch = cracking::treesAndGraphs::routeBetweenNodes(aGraph, aNodeA, aNodeB,
+                                                      cracking::treesAndGraphs::traversalStrategy::breadthFirst);
+  EXPECT_TRUE(helper::compareArray(aPathDepthFirstSearch, aExpectedOutput));
+  EXPECT_TRUE(helper::compareArray(aPathBreadthFirstSearch, aExpectedOutput));
 }
 
 TEST(RouteBetweenNodesTest, RouteBetweenNodesTest_notFound) {
@@ -1436,6 +1448,10 @@ TEST(RouteBetweenNodesTest, RouteBetweenNodesTest_notFound) {
   std::string aNodeA = "1";
   std::string aNodeB = "5";
 
-  std::vector<std::string> aPath = cracking::treesAndGraphs::routeBetweenNodes(aGraph, aNodeA, aNodeB);
-  EXPECT_TRUE(aPath.empty());
+  std::vector<std::string> aPathDepthFirstSearch = cracking::treesAndGraphs::routeBetweenNodes(aGraph, aNodeA, aNodeB,
+                                                      cracking::treesAndGraphs::traversalStrategy::depthFirst);
+  std::vector<std::string> aPathBreadthFirstSearch = cracking::treesAndGraphs::routeBetweenNodes(aGraph, aNodeA, aNodeB,
+                                                      cracking::treesAndGraphs::traversalStrategy::breadthFirst);
+  EXPECT_TRUE(aPathDepthFirstSearch.empty());
+  EXPECT_TRUE(aPathBreadthFirstSearch.empty());
 }

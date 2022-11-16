@@ -172,6 +172,7 @@
     - https://embeddedartistry.com/blog/2017/08/02/an-overview-of-c-stl-containers/
     - `std::array` vs `std::vector`
   - C++ style guide https://google.github.io/styleguide/cppguide.html
+  - RAII: https://stackoverflow.com/questions/20195611/assigning-existing-values-to-smart-ptrs
 
 - `Bit` and `byte`
   - `byte`

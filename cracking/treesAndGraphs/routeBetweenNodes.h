@@ -5,31 +5,35 @@
 namespace cracking {
 namespace treesAndGraphs {
 
+enum traversalStrategy {depthFirst, breadthFirst};
+
 class Graph {
 public:
   class Node {
   public:
     std::string value;
+    std::vector<std::string> adjacentList;
+
     bool visited = false;
+    std::string parent;
+
     Node(std::string& iValue) : value(iValue), visited(false) {};
   };
-  std::unordered_map<std::string, std::vector<Node>> _graph;
+
+  std::unordered_map<std::string, Node> _graph;
 
   void insert(std::pair<std::string, std::vector<std::string>> iPair) {
-    std::vector<Node> aListOfChildNodes;
-    for (auto iter = iPair.second.begin(); iter != iPair.second.end(); iter++) {
-      aListOfChildNodes.push_back(*iter);
-      // aListOfChildNodes.push_back(Graph::Node(*iter));
+    Node aNode(iPair.first);
+    for (auto iter : iPair.second) {
+      aNode.adjacentList.push_back(iter);
     }
-    _graph.insert({iPair.first, aListOfChildNodes});
-    // _graph.insert(std::make_pair<std::string, std::vector<Node>>(iPair.first, aListOfChildNodes));
-    // _graph.insert(std::make_pair(iPair.first, aListOfChildNodes));
+    _graph.insert({aNode.value, aNode});
 
   }
 
 };
 
-std::vector<std::string> routeBetweenNodes(Graph& iGraph, std::string& iNodeA, std::string& iNodeB);
+std::vector<std::string> routeBetweenNodes(const Graph& iGraph, std::string& iSourceNode, std::string& iDestinationNode, traversalStrategy strategy);
 
 }
 }
