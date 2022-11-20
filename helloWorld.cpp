@@ -35,6 +35,7 @@
 #include "cracking/stacksAndQueues/sortStack.h"
 
 #include "cracking/treesAndGraphs/routeBetweenNodes.h"
+#include "cracking/treesAndGraphs/minimalTree.h"
 
 #include "cracking/cAndCpp/lastKLines.h"
 #include "cracking/cAndCpp/reverseString.h"
@@ -65,6 +66,31 @@ bool compareArray(const std::vector<T>& iArray1, const std::vector<T>& iArray2) 
   for (int i = 0; i < iArray1.size(); i++) {
     if (iArray1[i] != iArray2[i]) {
       return false;
+    }
+  }
+
+  return true;
+}
+
+// template<class T>
+bool compareGraph(const cracking::treesAndGraphs::BinaryTreeNode& iGraph1, const cracking::treesAndGraphs::BinaryTreeNode& iGraph2) {
+  if (iGraph1._graph.size() != iGraph2._graph.size()) {
+    return false;
+  }
+
+  for (auto pair1 : iGraph1._graph) {
+    auto pair2 = iGraph2._graph.find(pair1.first);
+    if (pair2 == iGraph2._graph.end()) {
+      return false;
+    } else {
+      if (pair1.second.adjacentList.size() != pair2->second.adjacentList.size()) {
+        return false;
+      }
+      for (auto iter : pair1.second.adjacentList) {
+        if (std::find(pair2->second.adjacentList.begin(), pair2->second.adjacentList.end(), iter) == pair2->second.adjacentList.end()) {
+          return false;
+        }
+      }
     }
   }
 
@@ -1454,4 +1480,37 @@ TEST(RouteBetweenNodesTest, RouteBetweenNodesTest_notFound) {
                                                       cracking::treesAndGraphs::traversalStrategy::breadthFirst);
   EXPECT_TRUE(aPathDepthFirstSearch.empty());
   EXPECT_TRUE(aPathBreadthFirstSearch.empty());
+}
+
+TEST(MinimalTreeTest, MinimalTreeTest_oddLengthArray) {
+  std::vector<int> array{1,2,3,4,5,6,7,8,9};
+  cracking::treesAndGraphs::BinaryTreeNode aExpectedGraph;
+  aExpectedGraph.insert({5, {3, 8}});
+  aExpectedGraph.insert({8, {7, 9}});
+  aExpectedGraph.insert({7, {6}});
+  aExpectedGraph.insert({3, {2, 4}});
+  aExpectedGraph.insert({2, {1}});
+  aExpectedGraph.insert({4, {}});
+  aExpectedGraph.insert({9, {}});
+  aExpectedGraph.insert({1, {}});
+  aExpectedGraph.insert({6, {}});
+  cracking::treesAndGraphs::BinaryTreeNode aOutput = cracking::treesAndGraphs::minimalTree(array);
+  EXPECT_TRUE(helper::compareGraph(aExpectedGraph, aOutput));
+}
+
+TEST(MinimalTreeTest, MinimalTreeTest_evenLengthArray) {
+  std::vector<int> array{0,1,2,3,4,5,6,7,8,9};
+  cracking::treesAndGraphs::BinaryTreeNode aExpectedGraph;
+  aExpectedGraph.insert({5, {2, 8}});
+  aExpectedGraph.insert({8, {7, 9}});
+  aExpectedGraph.insert({7, {6}});
+  aExpectedGraph.insert({6, {}});
+  aExpectedGraph.insert({9, {}});
+  aExpectedGraph.insert({2, {1,4}});
+  aExpectedGraph.insert({4, {3}});
+  aExpectedGraph.insert({3, {}});
+  aExpectedGraph.insert({1, {0}});
+  aExpectedGraph.insert({0, {}});
+  cracking::treesAndGraphs::BinaryTreeNode aOutput = cracking::treesAndGraphs::minimalTree(array);
+  EXPECT_TRUE(helper::compareGraph(aExpectedGraph, aOutput));
 }

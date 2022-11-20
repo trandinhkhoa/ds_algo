@@ -49,7 +49,8 @@ set (libCrackingStacksAndQueues_SOURCE
     ${CMAKE_CURRENT_SOURCE_DIR}/cracking/stacksAndQueues/queueViaStacks.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/cracking/stacksAndQueues/sortStack.cpp)
 set (libCrackingTreesAndGraphs_SOURCE
-    ${CMAKE_CURRENT_SOURCE_DIR}/cracking/treesAndGraphs/routeBetweenNodes.cpp)
+    ${CMAKE_CURRENT_SOURCE_DIR}/cracking/treesAndGraphs/routeBetweenNodes.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/cracking/treesAndGraphs/minimalTree.cpp)
 set (libCrackingCAndCpp_SOURCE
     ${CMAKE_CURRENT_SOURCE_DIR}/cracking/cAndCpp/lastKlines.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/cracking/cAndCpp/reverseString.cpp
